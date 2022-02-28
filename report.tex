@@ -1,0 +1,436 @@
+%========================%
+%    Initial Settings    %
+%========================%
+%  ignore all lines up   %
+%       to line 78       %
+%========================%
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{hanging}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{mathrsfs}
+\usepackage{caption}
+\usepackage{tocbasic}
+\usepackage[toc,page]{appendix}
+\DeclareTOCStyleEntry[beforeskip=.1em plus 1pt, pagenumberformat=\textbf]{tocline}{section}
+\usepackage{adjustbox}
+\usepackage[english]{babel}
+\setlength{\parindent}{4em}
+\setlength{\parskip}{0.5em}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{setspace}
+\onehalfspacing
+\hypersetup{
+    colorlinks=false,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=black,
+}
+\newcommand{\MYhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+\urlstyle{same}
+\usepackage[letterpaper, portrait, margin=1in]{geometry}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\titleclass{\subsubsubsection}{straight}[\subsection]
+
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+
+\titleformat{\subsubsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+  {3.25ex \@plus1ex \@minus.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+  {3.25ex \@plus1ex \@minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+\def\toclevel@paragraph{6}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\listtablename}{Tables}
+\renewcommand{\listfigurename}{Figures}
+
+%========================%
+% Beginning of Document  %
+%========================%
+
+\begin{document} 
+
+%========================%
+%     General Note       %
+%========================%
+%  Start new line: '\\'  %
+%  Start new paragraph:  %
+%         '\par'         %
+%========================%
+
+%========================%
+%       Title Page       %
+%========================%
+
+\pagenumbering{gobble} % Disable page number on title page
+\begin{center}
+    \Huge{\textbf{Canary: An end to end testing framework for Minestom}} \\ % Input title of MQP
+    \vspace{10mm} % Add vertical space between sections
+    \large{
+    A Major Qualifying Project (MQP) Report \\
+    Submitted to the Faculty of \\
+    WORCESTER POLYTECHNIC INSTITUTE \\
+    in partial fulfillment of the requirements \\
+    for the Degree of Bachelor of Science in \\
+    } % Do not edit this portion
+    \Large{
+    \vspace{5mm} % Add vertical space between sections
+    Computer Science \\ % Input first major
+    \vspace{10mm} % Add vertical space between sections
+    By: \\
+    \vspace{2mm} % Add vertical space between sections
+    Alexander Kinley \\ % Input first author name
+    Matthew Worzala \\ % Input second author name
+    \vspace {15mm} % Add vertical space between sections
+    Project Advisors: \\ % Edit if only one advisor
+    \vspace{2mm} % Add vertical space between sections
+    Professor Joshua Cuneo \\ % Input name of first advisor
+    \vspace {10mm} % Add vertical space between sections
+    Date: April 2022 \\ % Input date of project submission
+    }
+    \vspace{0mm} % Add vertical space between sections
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/logo.png} % Set the image width relative to the with of the text on the page and input the name of the image that is being placed.
+    \end{figure}
+    \large{\textit{This report represents work of WPI undergraduate students submitted to the faculty as evidence of a degree requirement. WPI routinely publishes these reports on its website without editorial or peer review. For more information about the projects program at WPI, see \url{http://www.wpi.edu/Academics/Projects}.}} % Do not edit this portion
+\end{center}
+
+%========================%
+%   Delete unnecessary   %
+%  portions and adjust   %
+%   vertical spaces in   %
+%  lines 89-121 so that  %
+%   the text fills the   %
+%   entire title page    %
+%========================%
+
+\newpage % Start new page
+\pagenumbering{roman} % Set page numbering to lower case Roman numerals (Use 'Roman' for capital Roman numerals)
+\setcounter{page}{1} % Set page number to 1
+
+\section*{Abstract} % Start the section 'Abstract'. Include the asterisks to keep section unnumbered and off of the table of contents
+
+\noindent Type abstract here. % Use '\noindent' to remove indentation from the first paragraph of each section
+\par Second paragraph of abstract % Use '\par' to start a new paragraph
+
+\newpage % Start new page
+\section*{Acknowledgements} % Start the section 'Acknowledgements'. Include the asterisks to keep section unnumbered and off of the table of contents
+
+\noindent Begin list of acknowledgements
+\begin{enumerate} % Start a numbered list
+    \item First Acknowledgement % Name of first acknowledgement
+    \item Second Acknowledgement % Add new item with '\item'
+\end{enumerate}
+
+% OR %
+
+\begin{itemize} % Start a bulletted list
+    \item First Acknowledgement % Name of first acknowledgement
+    \item Second Acknowledgement % Add new item with '\item'
+\end{itemize}
+
+\newpage % Start new page 
+\tableofcontents % Table of contents
+\listoftables % List of tables
+\listoffigures % List of figures
+
+\newpage % Start new page
+\begin{doublespacing} % Adjust spacing
+\pagenumbering{arabic} % Set page numbering to Arabic numbers
+\setcounter{page}{1} % Set page number to 1
+
+\section{Introduction} % Start the section 'Introduction'. Do not include the asterisks to add section number and include in table of contents
+
+Minecraft is a popular video game developed by Mojang studio and officially released in 2011. The basic premise is that the world is made up of many cube shaped blocks, and the player has the ability to break and place these blocks. Since its first release, Minecraft has grown into something much larger than this basic premise. One part of this growth is through custom multiplayer servers that allow for entirely new ways to play the game. Traditionally these custom servers have been accomplished by in some way modifying the default multiplayer server. This has been a very fruitful approach, and there are a massive amount of servers that take this approach. 
+
+Minestom is an open source library that re-implements the basic functionalities of a Minecraft server. The goal is to provide a strong foundation for people to build custom Minecraft servers on top of. Minestom is more performant, and far easy to extend than the default server, because it was built from the ground up with those goals. People who want to create a custom multiplayer gamemode or any other sort of custom behavior, can choose to build it on top of Minestom instead of using other tools that work by modifying the default multiplayer server. Since Minestom is a library that is aimed at people who want to implement custom functionality, providing a robust software development framework is important. Part of this framework could include test driven development. 
+
+Test driven development is a software development methodology where the software requirements are first encoded in test cases, before they are implemented. This means that you can continually test your software using the test cases, and have some reassurance that it is working correctly. This is commonly done using unit tests, which are tests of specific parts of the code like a class or function. This specificity is great for making sure that particular parts of a larger system are working properly. They are something that are simple to integrate into a java codebase using libraries such as JUnit. For when you want to test the behavior or functionality of an entire system, integration tests, or end to end testing are the solution. In other contexts this may take the form of automatically clicking through buttons on a form to ensure that it reaches the correct end state, or doing a predetermined set of inputs into a video game, and verifying that you end up where you expect to. 
+
+Minecraft presents a particularly interesting situation with regard to end to end testing, in that everything is modular and intended to behave the same in many different situations. You can manually test a feature by building some test structure, and then taking steps like spawning entities, or interacting with blocks, to test the feature. You would look for the expected behavior, and then be able to determine if the feature works as expected. This is a workflow that can be automated. You can build your test structure and then save it. Then you can use the test structure along with programmatic equivalents of the additional steps like spawning entities, or interacting with blocks. Then you can have assertions about the behavior of the situation under test. 
+
+%\newpage % Start new page
+\section{Background}
+
+Test driven development has become a popular technique in recent years, and as such this project is not the first to attempt to bring testing into the Minecraft world. Mojang itself has created an internal tool (named GameTest) for testing their game, and it serves as a great inspiration for this project. According to Henrik Knilberg (2020), a member of the gameplay team at Mojang, “”. Ultimately, while Mojang’s work serves as a good inspiration for creating tests based inside the game, it has some significant flaws for widespread use. It is not made for Minestom, and therefore makes a number of assumptions about Mojang features being implemented. Furthermore, the framework is closed source, so modifications are challenging and ineffective in a different environment, and cannot be posted publicly. In the category of modifications to the Mojang server, there have been two major attempts at testing: MockBukkit and McTester. Both take a programmatic approach to testing, and target different use cases. MockBukkit provides the user with an API for creating mocked resources such as players, worlds, and Bukkit plugins. This approach does allow for a variety of testing methods, however, since the tests are created programmatically, the setup can be expensive even for simple tests. McTester works by running a headless client and allowing the test to submit commands to the client, which can be asserted on server side. For example, a test could include a client right clicking a Command Block and asserting that the GUI was only opened if the player had appropriate permission. This method of end-to-end testing is effective for testing a server implementation (such as testing Minestom internally), however, it introduces unnecessary overhead for testing applications built on top of Minestom because the internals are expected to be tested and working independently. Finally, Minestom has seen its own attempt to create a testing framework internally. The test framework involved a mocked client connection to the server, from which a test could submit packets and make assertions on the received packets. Similar to McTester, this can be effective for testing internal features, however, it becomes cumbersome to work on a packet level when testing in userland.
+
+Custom Minecraft servers have evolved throughout the years, starting from simple survival servers with extra enchantments, to game modes which look and feel like a new game completely.  
+%========================%
+%   Inputting a table    %
+%========================%
+
+%\begin{table}[!tb] % Use '!' to override the LaTeX table placement, 't' to place the table at the top of the page, and 'b' to place the table at the bottom of the page if the top does not work
+    %\begin{center}
+        %\begin{tabular}{ |c|c|c| } 
+            %\hline
+            %cell1 & cell2 & cell3 \\ 
+            %cell4 & cell5 & cell6 \\ 
+            %cell7 & cell8 & cell9 \\ 
+            %\hline
+        %\end{tabular}
+        %\caption{Caption of table} % Automatically adds a table number which updates as more tables are added to the paper
+        %\label{table:label_of_table} % Used in the paper to reference the table and automatically includes the table number in the in-text reference.
+    %\end{center}
+%\end{table}
+
+%\par To reference a table, you would simply say Table \ref{table:label_of_table}. By using the table label, the reference updates automatically as the paper is edited and more tables are added.
+
+% For more information, go to https://www.overleaf.com/learn/latex/tables
+
+\section{Requirements}
+
+\subsection{Objectives and Constraints}
+
+
+As previously discussed, this project aims to fill a perceived void in the minestom ecosystem for end to end testing solutions. We hope to create a library to be the de facto standard for end to end testing in the Minestom ecosystem. In order to meet this goal, we need to consider two main factors, ease of use and coverage of all major use cases. Ease of use means that developers using Canary shouldn’t feel like they have to fight with the library in order to accomplish what they want. The library should be internally consistent and predictable, while handling the needs of developers. To cover all major use cases, Canary should be applicable to the scenarios where developers would want end to end testing.
+
+To figure out what standard usage might look like, we can look towards the greater Minecraft server modding community to see what sort of features or functionality people have implemented within a Minecraft server.
+
+Although the functionality and features that people add to Minecraft servers are broad and diverse, we can break them down into a few general categories based on what they require from an end to end testing library. The main factor in determining what a feature requires to be able to be tested, is the types of effects on the world it can have. We will look at three broad categories of functionality that can be added to a minecraft server.
+
+
+\noindent \textbf{Custom entity or block behavior}
+
+This category refers to most world behavior that is not linked to the player. This includes entity AI, entity properties, block properties, and how blocks interact with other blocks, and more. Generally these features only affect a small area around the block or entity, and happen based on the state of the world, and not players in the world. 
+
+Manually testing these types of features would generally involve building some sort of setup that will cause the desired behavior to occur, and then watching for the behavior to happen as expected. If testing, for example, you want to test that minecarts roll down hills correctly. You would first build a track down a hill, and then place a minecart on that track. Then you would watch for the minecart to end up at the bottom of the track. 
+
+Canary should allow you to define the setup for a test, as well as the expected outcome, and then execute the test on its own.  The required functionality for this is:
+Be able to define the starting state of a test, including the blocks, block properties, and entities.
+Be able to check if expected outcomes happened. 
+
+Determining if the expected outcome happened, in general, is a challenging problem. There is a wide variety of things that someone might look for to determine if a test ran correctly. Examples include, looking for an entity to get to a location, looking for a block to be in a certain state, making sure some condition did not happen, or checking for things to happen in a certain order. There is a further discussion of  assertions in the needs section.
+
+This category of feature is likely the one that benefits the most from end to end testing. Because most of the behaviors only cause changes in a small area, tests can be run simultaneously without having to reset the entire world between tests. On top of the functionality requirements, the process of making, running, and debugging these tests should be simple and straightforward to align with the overall goal of ease of use.
+
+\noindent \textbf{Custom server commands}
+
+Server commands are a way to use player messages like a command line or terminal. Custom commands are a common way to implement features like switching between worlds, primitive UI for server interaction, or a way for players to modify various aspects of the world. Server commands, unlike entity and block behavior, frequently affect things far beyond the player, including internal server state. To test server commands we should be able to 
+Simulate a player from a known starting state in a known context executing a command
+Check for the expected behavior of the command
+
+Server commands present a particular challenge in that their behavior is not bound in any way. A server command can do anything from changing a block near the player, to teleporting the player, to affecting other players, worlds, or the entire server. This broad scope makes it challenging to be able to effectively test all varieties of server commands, because creating a known starting state could potentially require restarting the entire server between every test, which would seriously impact the ability to quickly run tests.
+
+\noindent \textbf{Customizing player interaction}
+
+As discussed, changing what happens when a player interacts with the world is quite a common thing for Minecraft server mods to do. The types of changes that might be caused by these custom player behaviors frequently cover the full range of possible server behavior. Anything from combat, to inventories, to manipulating custom guis.  Similar to server command, testing player interactions requires
+Simulate a player from a known starting state in a known context interacting with the world in some particular way
+Check for the expected behavior of the interaction
+
+Player interaction often causes changes that can be challenging to test. A player clicking on an item in their inventory might teleport them to a different world, or a player clicking on a block with a certain item could cause that player to be sent a chat message. 
+
+\subsection{Final Requirements}
+
+Over all, there are many challenges to creating a test system that covers all expected use cases. In particular, being able to test every possible server behavior in a consistent and reliable manner would force the overall library to be much less useful. For this reason, we chose to focus mainly on testing custom entity and block behavior features which can be tested in a finite and confined area. These features can require elaborate setups to fully test, and stand to benefit the most from automated end to end testing. That being said, we have not entirely ignored other feature types, and they could be the focus of future work, or other projects.
+
+From this, we can create a list of the high level requirements of Canary. We have split the requirements into two categories, based on our original goals of ease of use, and full feature coverage.
+
+\noindent Ease of Use 
+\begin{itemize}
+  \item Canary must be easy for developers to use, including creating tests, running tests, and debugging why a test might have failed.
+  \item When possible, Canary should allow developers to create tests in a way similar to how they would when manually testing
+  \item The code API used when writing code for tests should be understandable and abstract away common operations
+  \item When a test case fails, Canary should provide error messages that help debug the problem
+  \item Tests should be fast to run on a local machine
+  \item Tests should be able to run in CI/CD servers in the same way other types of test might
+  \item Any data for tests that is not code should work nicely with version control
+\end{itemize}
+\noindent Feature Coverage
+
+\begin{itemize}
+  \item Canary must be applicable to all major use cases, in particular custom block and entity behavior should be able to be tested by Canary.
+  \item Defining the expected outcome of a test should be able to express complex scenarios
+  \item The things that can be asserted about should by default cover most common usage, and allow for easy developer extension for rare or custom properties
+\end{itemize}
+%========================%
+%   Inputting an image   %
+%========================%
+
+%\par To add an image to the document, you first have to upload it to the file. To do so, click the "Upload" button on the top left of the screen (just below the "Menu" button, pictured in the figure below) and upload the image from your computer. 
+
+%\begin{figure}[h] % Use 'h' to tell overleaf to place the image approximately 'here', meaning that you want it to be somewhere near where you are putting it in the text but will allow LaTeX to move it so that the overall format is best
+    %\centering
+    %\includegraphics[width=0.5\textwidth]{Images/logo.png} % Set the image width relative to the with of the text on the page and input the name of the image that is being placed.
+    %\caption{Figure Caption} % Automatically adds a figure number which updates as more figures are added to the paper
+    %\label{fig:label_of_figure} % Used in the paper to reference the figure and automatically includes the figure number in the in-text reference.
+%\end{figure}
+
+%\par To reference a figure, you would simply say Figure \ref{fig:label_of_figure}. By using the figure label, the reference updates automatically as the paper is edited and more figures are added.
+
+% For more information, go to https://www.overleaf.com/learn/latex/Inserting_Images
+
+\section{Needs}
+
+With the high level requirements determined, we now have to translate them into specific requirements to be implemented in software. To do this, we first need to decide on our overall approach to end to end testing. For this, we looked at prior work in end to end testing, as well as how developers approach manual testing. Our main inspiration was the work that Majang themselves had done. The key concept from this work is the combination of code with other data to create the “structure” associated with the test, and to use code to define any additional starting setup, as well as to create the assertions for the test. 
+% TODO: some pictures of these test structures, and code for a test
+
+This approach allows for the creation of the test structures to be done in Minecraft, the same way that someone would when manually testing. Along with this, it should reduce the amount of code needed for each test, further improving ease of use. The actual functionality of Canary can be split up into 3 broad categories that are responsible for all of the requirements.
+
+\subsection{Test Builder}
+As discussed, Canary tests have a test structure associated with them. This structure is not defined by code. Instead, it is other data that is loaded into the world when a test is being run. To make Canary easy to use for developers, we need to allow them to create these structures in the same way that they would when manually testing, by building them in Minecraft. The test builder is the subsystem of Canary responsible for letting users create and manipulate these structures. The test builder is a feature accessible on servers running Canary, and allows users to build structures in game, that will then be saved in a form that can be ingested when running tests.  
+
+The requirements of the test builder in general are to allow for creating all the necessary starting conditions for tests. The test builder should also be easy to use, and allow for all of the types of operations that would frequently be needed when making end to end tests. Such as making tests that have similar test structures. The created structures should also allow users to edit the properties of the blocks, either to change how they behave, or to mark them so their position can be referenced from the actual code associated with the test (mark a block with a name that can be used to easily get the position of the block).
+
+Once a user has built a test structure in game, they should be saved in a format that can be read back in when running tests. Additionally, this format should have some amount of compatibility with git. Structure files should be text based so that minor changes to the structure will not cause git to see the whole fill as changed, and instead see a few lines out of the entire structure as changed. 
+\subsection{Assertions}
+
+Assertions, along with the other API’s involved in the code for each test, are perhaps the most integral part of Canary. The test builder is how a user defines the starting block configuration for their test, and assertions are how a user defines the expected behavior of the test. This system bears the brunt of the complexity in Canary with respect to being fully featured and easy to use. 
+
+As discussed previously, most other end to end testing systems require the programmer to handle the fact that their tests are most likely not fully deterministic due to factors such as frame rate. Minestom falls into this category, it’s very possible to write code that produces slightly different output depending on things like exact frame timing. For Canary to be useful, we need to provide developers a way of specifying the expected behavior of their tests. To be reliable, this needs to be done without using methods such as directly comparing runs, or letting users prescribe an exact amount of time that something will take.
+
+The solution proposed in this report is to allow for developers to create small programs that define the expected state of the world during the test. The types of things that can be expected would be that an entity makes it to a certain location, or that there is not a block at a certain position. Additionally, these sorts of assertions can be combined in various ways, such as with a logical and, or by saying that one should happen before the other. This solution creates many challenges, but ultimately it is the only approach that offers the needed capabilities while still fulfilling the other goals of the project.  
+\subsection{Test Executor}
+The test executor is the core of Canary. Similar to other systems, test execution comes with its own set of challenges. These mainly have to do with the need for tests to not affect each other, while wanting the user experience of Canary to be as good as possible. So the main requirement is that a test cannot inadvertently change the results of another test. This would be a risk if tests were run together in the same world such that an entity might react to other blocks outside of the test that it is a part of.
+
+While we want tests to be isolated, we also want it to be easy for a user to see groups of related tests at the same time. This is a valuable feature both for development when you would want to make sure that all of the tests for a feature are working as expected, but also for when you want to see if groups of related tests are failing in the case of a bug. The way that we have decided to accomplish this is by grouping tests from the same test class together in rows in the world.
+
+The final feature of the test executor is that it should be able to run the tests both locally, as well as on a CI/CD server. In both cases, there should be output that is helpful in the case of test failure. 
+
+
+\section{Implementation}
+
+As established, writing assertions about events which have not happened, nor will happen in a deterministic manner creates a significant challenge. The solution proposed in this report is split into two distinct segments, roughly modeled after a typical interpreted programming language: assertions themselves (syntax), and the backing assertion nodes (AST). A typical assertion in Canary might look like the following:
+\begin{lstlisting}[language=Java]
+// Listing AE.1
+expect(myZombie).toBeAt(3, 1, 3).and().toHaveHealth(20.0);
+\end{lstlisting}
+
+%```java
+%// Listing AE.1
+%expect(myZombie).toBeAt(3, 1, 3).and().toHaveHealth(20.0);
+%```
+%The syntax is legible like plain English, eg "I expect that my zombie will be at \bra{3,1,3> and have 20 health". In this report, an assertion may be re\phierenced using the \phiollowing abstract representation:
+  %\verb|EXPECT(myZombie) pos=<3,1,3> AND health=20.0| 
+  %`EXPECT(myZombie) pos=<3,1,3> AND health=20.0`, or simply `pos=<3,1,3> AND health=20.0` for the general case. When the test containing Listing AE.1 is executed, the calls generate a list of steps to the assertion. This step is analogous to tokenizing an input source in a programming language. In this case, the list would be the following:
+%```
+%SUBJECT = myZombie
+%STEPS = [
+  %subject.pos == <3, 1, 3>,
+  %AND,
+  %subject.health == 20.0,
+%]
+%```
+From this list, the engine generates a tree of nodes, each of which has the ability to report whether it passed or failed depending on the condition (eg `subject.pos == <3,1,3>`) or the children. For example, the `AND` node has the following simple logic:  \\
+    1. If any child is a \verb|FAIL|, return `FAIL`
+    2. Return `PASS`
+    %1. If any child is a `FAIL`, return `FAIL`
+    %2. Return `PASS`
+This system is analogous to an Abstract Syntax Tree (AST) in an interpreter, and allows the test executor to simply check the root node to determine the result of the assertion.
+
+\subsection{Soft Pass}
+%The assertion engine as described above is effective, however, it is not perfect. A common assertion tool is the `NOT` statement. This allows the user to invert the statement directly following. For example, `NOT health=20.0` says that it will fail if the subject's health is equal to 20. Unfortunately, the opposite side is not as simple. Assertions are executed every server tick until they return a `PASS` (more on this later). If, for example, the subject has a starting health of 10, then on the first frame this assertion will return `PASS` and never be tested again. The solution to this problem is to introduce a third state to the equation: `SOFT_PASS`. A soft pass indicates that the condition is currently passing, however it could fail in the future so it must be tested again. This system allows for statements which cannot produce a final output. Another use case of this system is the `ALWAYS` statement. It says that the following condition _must_ be true for the duration of the test. The `ALWAYS` node can never return a `PASS`, because the condition could still change in the next tick, so instead it returns `SOFT_PASS`.
+
+\subsection{Assertion Specification}
+TODO: Finish in iA
+
+\subsection{Player Interaction Testing}
+TODO
+
+\subsection{Test Executor}
+The Canary test executor is responsible for managing the testing environment and complying with the JUnit test engine specification. When the engine is invoked, it first discovers every potential test case (method annotated with `@InWorldTest`). Each test is loaded into the appropriate Java ClassLoader (TODO: Talk about class loaders. It is relevant because we are targeting mixin Minestom. Could put this in an appendix and talk about the ClassLoader troubles as well as the compiler plugin that ensures nothing bad is happening), and a Minestom "instance" is created. An "instance" in Minestom is analogous to a Minecraft world, and allows the test to be completely isolated from all others. When the tests are executed, each test structure is placed into its respective instance, the assertion engine parses the step lists (Listing AE.2) into assertion trees. Finally, the test instances are ticked until it receives a definitive result. The stop conditions for a running test are as follows:
+  %1. Every assertion has returned a `PASS` value (pass)
+  %2. Every remaining assertion returns a `SOFT_PASS` value (pass)
+  %3. The timeout limit has been reached (fail)
+
+%A definitive pass may happen in two cases:
+  %1. Every assertion returns a `PASS` value
+  %2. The test times out and every remaining assertion returns a `SOFT_PASS` value.
+%The second condition is due to the behavior of `SOFT_PASS`. An assertion such as `ALWAYS` cannot ever know that it has definitively passed, so it exclusively returns `SOFT_PASS` or `FAIL`. When a test times out, however, it means that there are no more steps so a `SOFT_PASS` is equivalent to a `PASS`. Because Canary tests run over a long period of time and state changes throughout, `FAIL` does not indicate a definitive failure. Instead, it indicates that the test has _not yet passed_ but may in the future. If the time runs out and there are still failing assertions, then the test is a failure.
+
+\subsection{Sandbox Instance}
+Writing tests inside the environment they are testing provides the user a huge benefit, including real-time feedback. The user can enter the game and watch their tests running in real time, making it extremely simple to determine what is wrong. Canary facilitates this using the "sandbox instance", a Minestom instance containing every loaded test. This world allows the user to visibly see which tests are passing or failing, and fly around to view them.
+
+\subsection{Sandbox vs. Headless Mode}
+Canary has a strong focus on ease of use and visual feedback through the sandbox mode of the test engine. That, however, is not the only responsibility of a test engine. Test engines must be able to execute remotely in a Continuous Integration/Continuous Development (CI/CD) pipeline. Canary refers to this execution mode as "headless" mode, and it differs from the sandbox mode in a few ways. The running test server is not available to join, and the debug information is not loaded including commands and the sandbox instance. To ensure that all tests remain isolated and predictable, each test is still loaded into its own instance.
+
+\subsection{Isolation}
+It is critical to create the same exact environment for every execution of a test both locally on multiple distinct machines, or remotely as a part of a CI/CD pipeline. This task is non-trivial in the Minestom environment, since a test may access and use arbitrary server data, or interact with arbitrary blocks around the test environment. The most obvious solution is to use a unique Minestom server for each test which solves the global state and nearly interaction issues simply. Unfortunately, this solution has significant drawbacks in terms of speed and usability. Minestom makes use of some global (`static` in Java) state for running server information, which means that you cannot easily have two Minestom servers running at the same time. It is possible to start a Java Virtual Machine (JVM) subprocess for each test, or to load each test into its own ClassLoader. Both results incur a large initialization overhead and memory increase for each individual test because every class must be reloaded each time. Regarding usability, separating each test into its own JVM or ClassLoader means that it is no longer possible to create the aggregate sandbox instance, destroying the ease of creating tests. Instead, Canary handles isolation by placing each individual test (and associated structure) into its own unique Minestom instance. This allows the sandbox instance to remain by forwarding actions from each sub instance into the sandbox. This solution, however, does not impose strict isolation for global server state. In the end, this compromise was worth the benefit provided by the sandbox instance. One of the benefits of thorough testing is that it forces users to write code which can be used in isolation, so this requirement is helpful in some ways.
+%========================%
+% Inputting an equation  %
+%========================%
+
+% Use '\begin{equation}' to input a numbered equation. Used when equations will be reference in-text. Unlike tables, this equation will appear exactly where you put it in the text.
+
+%\begin{equation} 
+    %y=mx+b
+    %\label{eq:equation_label}
+%\end{equation}
+
+%\par Once the equation is inputted, you can reference it similarly to tables using 'Equation \ref{eq:equation_label}'. Just like tables, the equation number update automatically when the paper is edited and new equations are added. 
+
+%\par If you want to include an equation that is not numbered, use the form $$\frac{-b\pm \sqrt{b^{2}-4ac}}{2a}$$ and the equation will appear exactly where you put it in the sentence, in it's own line. 
+
+%\par If you want to include an equation in a sentence without putting it in its own line, use the LaTeX 'math mode' using the form $x_{1}^{2}+x_{2}^{2}=r^{2}$. 
+
+% For more information and different methods, go to https://www.overleaf.com/learn/latex/mathematical_expressions
+
+\section{Conclusion}
+
+\noindent Input your conclusion here. 
+
+%\par Notes: 
+%\begin{enumerate}
+    %\item The table of contents is set up with hyperlinks, and you can get to any section of the paper by clicking the section in the table of contents. Same for tables and figures. 
+    %\item You can input as many sources as you want into the .bib file. They will only appear in the 'References' section if they are cited in text. The 'References' section is organized in the order of which the sources are cited in text. The in text citations are also hyperlinked, and clicking one will bring you to that source in the 'References' section. 
+    %\item If you ever don't know how to do something, you can almost always find it on \url{https://www.overleaf.com/learn} or just by Googling. 
+    %\item The paper can be split into sections, subsections, and subsubsections, and subsubsubsections. These can be inputted in any part of the main body of the text, from the abstract to the conclusion. Adding an asterisks in the command line will prevent the section from getting a section number and appearing in the table of contents.
+    %\item Appendices are referenced the same as anything else, using Appendix \ref{appendix:appendix_a_label} and Appendix \ref{appendix:appendix_b_label}.
+%\end{enumerate}
+
+%\newpage % Start new page
+%\begin{appendices}
+
+%\section{Appendix A Title}
+%\label{appendix:appendix_a_label}
+
+%Input materials for Appendix A. Works the same as regular text, just do not include captions or labels on any tables or figures. Appendices can be referenced in text the same way you reference figures or tables, using the label. 
+
+%\newpage
+
+%\section{Appendix B Title}
+%\label{appendix:appendix_b_label}
+
+%Input materials for Appendix B
+
+%\end{appendices}
+
+%\newpage % Start new page
+\end{doublespacing} % Return to single spacing
+\addcontentsline{toc}{section}{References} % Add the 'References' section to the table of contents
+\bibliographystyle{ieeetr} % Set the bibliography style
+%\bibliography{bibliography.bib} % Generate a bibliography from the .bib file with all of the references
+\end{document}
