@@ -1,20 +1,40 @@
 \babel@toc {english}{}\relax 
 \contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
 \contentsline {section}{\numberline {2}Background}{2}{section.2}%
-\contentsline {section}{\numberline {3}Requirements}{3}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Objectives and Constraints}{3}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Final Requirements}{5}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Needs}{6}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Test Builder}{7}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Assertions}{7}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Test Executor}{8}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Implementation}{8}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Soft Pass}{9}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Assertion Specification}{9}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Player Interaction Testing}{9}{subsection.5.3}%
-\contentsline {subsection}{\numberline {5.4}Test Executor}{9}{subsection.5.4}%
-\contentsline {subsection}{\numberline {5.5}Sandbox Instance}{10}{subsection.5.5}%
-\contentsline {subsection}{\numberline {5.6}Sandbox vs. Headless Mode}{10}{subsection.5.6}%
-\contentsline {subsection}{\numberline {5.7}Isolation}{10}{subsection.5.7}%
-\contentsline {section}{\numberline {6}Conclusion}{11}{section.6}%
-\contentsline {section}{References}{11}{section.6}%
+\contentsline {subsection}{\numberline {2.1}Automated Software Testing}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Unit Testing}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}End-to-End Testing}{3}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Minecraft}{4}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Custom Minecraft Servers}{5}{subsubsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.5}Minestom}{7}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Past Work}{7}{subsection.2.6}%
+\contentsline {subsubsection}{\numberline {2.6.1}Mojang GameTest}{7}{subsubsection.2.6.1}%
+\contentsline {subsubsection}{\numberline {2.6.2}Third Party Tools}{9}{subsubsection.2.6.2}%
+\contentsline {section}{\numberline {3}Requirements}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Custom Entity or Block Behavior}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Custom Server Commands}{10}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Customizing Player Interaction}{10}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Final Requirements}{11}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Implementation}{12}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Test Builder}{12}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Structure Files}{16}{subsubsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.2}Assertion Engine}{18}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Soft Pass}{19}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Assertion Specification}{20}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Player Interaction Testing}{20}{subsubsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.3}Test Executor}{21}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Sandbox Versus Headless Mode}{21}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Test Isolation}{22}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3}Test Environment}{22}{subsubsection.4.3.3}%
+\contentsline {subsubsection}{\numberline {4.3.4}Error Reporting}{23}{subsubsection.4.3.4}%
+\contentsline {section}{\numberline {5}Discussion}{24}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Validation}{24}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}Canary Demo}{25}{subsubsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.2}Future Work}{28}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Unified workflow}{28}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Testing Minestom Internally}{29}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.3}Behavior-driven Development}{29}{subsubsection.5.2.3}%
+\contentsline {section}{\numberline {6}Conclusion}{30}{section.6}%
+\contentsline {section}{References}{30}{section.6}%
+\contentsline {section}{\numberline {7}Appendix A: Java Classes \& Runtime Modification}{30}{section.7}%
+\contentsline {section}{\numberline {8}Appendix B: Tooling}{32}{section.8}%
