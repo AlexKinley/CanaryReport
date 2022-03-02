@@ -67,6 +67,7 @@
 \def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
 \def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
 \def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\def\code#1{\texttt{#1}}
 \makeatother
 
 \setcounter{secnumdepth}{4}
@@ -886,19 +887,19 @@ whether or not they are currently in the test builder. When the player
 is not in the test builder, the commands available to them are as
 follows:
 
-`/test builder new STRUCTURE\_NAME`
+\code{/test builder new STRUCTURE\_NAME}
 
 Places the player in a test builder world with the default starting
 structure. When they save the structure, the file will be named
-STRUCTURE\_NAME.json
+\code{STRUCTURE\_NAME.json}.
 
-`/test builder duplicate STRUCTURE\_NAME NEW\_STURCTURE\_NAME`
+\code{/test builder duplicate STRUCTURE\_NAME NEW\_STURCTURE\_NAME}
 
 Places the player in a test builder world with structure from
-STRUCTURE\_NAME.json. When they save the structure, the fill will be
-named NEW\_STRUCTURE\_NAME.json
+\code{STRUCTURE\_NAME.json}. When they save the structure, the fill will be
+named \code{NEW\_STRUCTURE\_NAME.json}.
 
-`/test builder join CURRENT\_STRUCTURE\_NAME`
+\code{/test builder join CURRENT\_STRUCTURE\_NAME}
 
 When there is a player currently building a test, this command is how
 you join them in the test builder.
@@ -906,7 +907,7 @@ you join them in the test builder.
 When the player is in the test builder, the commands available to them
 are as follows:
 
-`/test builder done`
+\code{/test builder done}
 
 Saves the current structure and returns the player to wherever they were
 when they entered the test builder.
@@ -968,11 +969,11 @@ used instead of items if desired by a user. The two commands currently
 implemented by Canary are for setting a marker and setting the block
 handler property of a block. They are defined as follows:
 
-`/test builder edit marker X Y Z MARKER\_NAME`
+\code{/test builder edit marker X Y Z MARKER\_NAME}
 
 Creates a marker at position (X, Y, Z) with the given name.
 
-`/test builder edit handler X Y Z HANDLER\_NAME`
+\code{/test builder edit handler X Y Z HANDLER\_NAME}
 
 Sets the block handler for the block at position (X, Y, Z) to be the one
 defined by the given name.
@@ -1058,13 +1059,13 @@ described for the block's value.
 \textbf{blockmap}
 
 An array where each element represents a block which is used in the
-structure; a block id of -1 represents a block of air with no additional
+structure; a block id of \code{-1} represents a block of air with no additional
 properties. A block can have a type, tags, a handler, and additional
 data. A block object has a block, handler, and data field. The handler
 and data fields correspond directly to the handler and additional data
 of the block they represent. The block field represents both the block
 type and the block tags as a single string of format
-`block\_type{[}tag1=tag1\_value,tag2=tag2\_value,...{]}` (if there are
+\code{block\_type{[}tag1=tag1\_value,tag2=tag2\_value,...{]}} (if there are
 no tags, the square brackets are omitted). If a block has a special
 handler or data, it must be defined as using a block object. If a block
 just has a type and tags, it can just be stored using a string equal to
@@ -1128,11 +1129,11 @@ expect(myZombie).toBeAt(3, 1, 3).and().toHaveHealth(20.0);
 ```
 
 The syntax is legible like plain English, e.g. "I expect that my zombie
-will be at \textless3,1,3\textgreater{} and have 20 health". In this
+will be at \code{\textless3,1,3\textgreater{}} and have \code{20} health". In this
 report, an assertion may be referenced using the following abstract
-representation: EXPECT myZombie.pos=\textless3,1,3\textgreater{} AND
-myZombie.health=20.0, or simply pos=\textless3,1,3\textgreater{} AND
-health=20.0 for the general case. When the test containing Listing 4.2.1
+representation: \code{EXPECT myZombie.pos=\textless3,1,3\textgreater{} AND
+myZombie.health=20.0}, or simply \code{pos=\textless3,1,3\textgreater{} AND
+health=20.0} for the general case. When the test containing Listing 4.2.1
 is executed, the calls generate a list of steps to the assertion. This
 step is analogous to tokenizing an input source in a programming
 language. The generated list for this case is shown in Listing 4.2.2.
@@ -1157,12 +1158,12 @@ subject.health == 20.0,
 
 From the step list, the engine generates a tree of nodes, each of which
 has the ability to report whether it passed or failed depending on the
-condition (eg subject.pos == \textless3,1,3\textgreater) or the
-children. For example, the AND node has the following simple logic:
+condition (e.g. \code{subject.pos == \textless3,1,3\textgreater}) or the
+children. For example, the \code{AND} node has the following simple logic:
 
-1. If any child is a FAIL, return FAIL
+1. If any child is a \code{FAIL}, return \code{FAIL}
 
-2. Return PASS
+2. Return \code{PASS}
 
 This system is analogous to an Abstract Syntax Tree (AST) in an
 interpreter, and it allows the test executor to simply check the root
@@ -1174,45 +1175,45 @@ described in Section 4.5.
 \subsubsection{Soft Pass}
 
 The assertion engine as described above is effective; however, it is not
-perfect. A common assertion tool is the NOT statement. This allows the
-user to invert the statement directly following. For example, NOT
-health=20.0 says that it will fail if the subject's health is equal to
-20. By defining what causes an assertion to fail, it becomes difficult
+perfect. A common assertion tool is the \code{NOT} statement. This allows the
+user to invert the statement directly following. For example, \code{NOT
+health=20.0} says that it will fail if the subject's health is equal to
+\code{20}. By defining what causes an assertion to fail, it becomes difficult
 to determine when it has passed. Assertions are executed every server
-tick until they return a PASS (further described in Section 4.5). If,
-for example, the subject has a starting health of 10, then on the first
-frame this assertion will return PASS and never be tested again. The
+tick until they return a \code{PASS} (further described in Section 4.5). If,
+for example, the subject has a starting health of \code{10}, then on the first
+frame this assertion will return \code{PASS} and never be tested again. The
 solution to this problem is to introduce a third state to the equation:
-SOFT\_PASS. A soft pass indicates that the condition is currently
+\code{SOFT\_PASS}. A soft pass indicates that the condition is currently
 passing; however, it could fail in the future, so it must be tested
 again. This system allows for statements which cannot produce a final
-output. Another use case of this system is the ALWAYS statement. It says
+output. Another use case of this system is the \code{ALWAYS} statement. It says
 that the following condition \emph{must} be true for the duration of the
-test. The ALWAYS node can never return a PASS, because the condition
-could still change in the next tick, so instead it returns SOFT\_PASS.
+test. The \code{ALWAYS} node can never return a \code{PASS}, because the condition
+could still change in the next tick, so instead it returns \code{SOFT\_PASS}.
 
 \subsubsection{Assertion Specification}
 
 In order to create the English-like syntax Canary uses for assertions, a
 somewhat complicated inheritance hierarchy is used. Each call to expect
 returns an assertion class for the specific object passed in, such as an
-EntityAssertion if a Minestom Entity is passed in. To reduce code
+\code{EntityAssertion} if a Minestom \code{Entity} is passed in. To reduce code
 duplication, assertion classes themselves create an inheritance
-hierarchy, meaning it is possible to call ObjectAssertion.toBe(Object)
-on an EntityAssertion. This works fine in isolation; however, it falls
-apart when considering chained assertions such as an AND statement. Each
+hierarchy, meaning it is possible to call \code{ObjectAssertion.toBe(Object)}
+on an \code{EntityAssertion}. This works fine in isolation; however, it falls
+apart when considering chained assertions such as an \code{AND} statement. Each
 assertion function returns itself so that more statements can be chained
 together, but control statements are defined on the base assertion
-class. Consider the code snippet in Listing 4.2.2.1; the and() call
-returns a BaseAssertion instance, which does not have toBeOnFire(). Java
-does not have a self type like in some languages, so we must use
+class. Consider the code snippet in Listing 4.2.2.1; the \code{and()} call
+returns a \code{BaseAssertion} instance, which does not have \code{toBeOnFire()}.
+Java does not have a self type like in some languages, so we must use
 recursive generics to accomplish a similar effect. Recursive generics
 are generic types which reference themselves. The (abbreviated)
-definitions for BaseAssertion and EntityAssertion can be seen in Listing
-4.2.2.2. BaseAssertion requires a generic parameter of some type
-inheriting from BaseAssertion. In EntityAssertion, we fill this
-requirement. As a result, the return type of not() inside
-EntityAssertion is still EntityAssertion. While this solution does
+definitions for \code{BaseAssertion} and \code{EntityAssertion} can be seen in
+Listing 4.2.2.2. \code{BaseAssertion} requires a generic parameter of some type
+inheriting from \code{BaseAssertion}. In \code{EntityAssertion}, we fill this
+requirement. As a result, the return type of \code{not()} inside
+\code{EntityAssertion} is still \code{EntityAssertion}. While this solution does
 accomplish the desired goals, it is an unsafe and generally discouraged
 practice because there is no strong validation on what is being set as
 the generic parameter. This system is internal to Canary, so these
@@ -1289,7 +1290,7 @@ initial Player state.
 The Canary test executor is responsible for managing the testing
 environment and complying with the JUnit test engine specification. When
 the engine is invoked, it first discovers every potential test case
-(method annotated with @InWorldTest). Each test is loaded into the
+(method annotated with \code{@InWorldTest}). Each test is loaded into the
 appropriate Java ClassLoader, and a Minestom instance is created. An
 "instance" in Minestom is analogous to a Minecraft world and allows the
 test to be completely isolated from all others. When the tests are
@@ -1299,18 +1300,18 @@ assertion trees. Finally, the test instances are ticked until it
 receives a definitive result. The stop conditions for a running test are
 as follows:
 
-1. Every assertion has returned a PASS value (pass)
+1. Every assertion has returned a \code{PASS} value (pass)
 
-2. Every remaining assertion returns a SOFT\_PASS value (pass)
+2. Every remaining assertion returns a \code{SOFT\_PASS} value (pass)
 
 3. The timeout limit has been reached (fail)
 
-The second condition is due to the behavior of SOFT\_PASS. An assertion
-such as ALWAYS cannot ever know that it has definitively passed, so it
-exclusively returns SOFT\_PASS or FAIL. When a test times out, however,
-it means that there are no more steps so a SOFT\_PASS is equivalent to a
-PASS. Because Canary tests run over a long period of time and state
-changes throughout, FAIL does not indicate a definitive failure.
+The second condition is due to the behavior of \code{SOFT\_PASS}. An assertion
+such as \code{ALWAYS} cannot ever know that it has definitively passed, so it
+exclusively returns \code{SOFT\_PASS} or \code{FAIL}. When a test times out, 
+however, it means that there are no more steps so a \code{SOFT\_PASS} is
+equivalent to a \code{PASS}. Because Canary tests run over a long period of time 
+and state changes throughout, \code{FAIL} does not indicate a definitive failure.
 Instead, it indicates that the test has \emph{not yet passed} but may in
 the future. If the time runs out and there are still failing assertions,
 then the test is a failure.
@@ -1388,8 +1389,8 @@ complex situation due to the long-running nature of the tests. In most
 testing frameworks, errors are presented as the difference between the
 expected and actual result. Canary assertions can be complex and not
 necessarily dependent on any single tick of the test. For example,
-consider the assertion pos=\textless3,1,3\textgreater. If the subject
-never reaches the position \textless3,1,3\textgreater{} before the time
+consider the assertion \word{pos=\textless3,1,3\textgreater{}}. If the subject
+never reaches the position \word{\textless3,1,3\textgreater{}} before the time
 runs out, then presenting the user with the final position is not
 necessarily helpful. For cases such as this, Canary records a log file
 every frame containing the output of each assertion. This data can be
@@ -1444,7 +1445,7 @@ do when manually testing a feature. In addition, sandbox mode provides
 only the last tick failure to the player, deferring to the longer log
 file for the complete output of the test. A sample failure report
 generated by the sandbox mode can be seen in Figure 4.3.4.2. The message
-contains a clickable element ({[}LOG{]}) to open the log file locally,
+contains a clickable element (\code{{[}LOG{]}}) to open the log file locally,
 and to teleport to the test in the sandbox to view the result visually.
 The test name can be clicked to teleport to the test in the sandbox
 instance. In addition to a more concise output, the sandbox instance
@@ -1564,7 +1565,7 @@ This test verifies that the minecart only moves forward when it is on
 top of rails. The structure and code are nearly identical to test 1,
 except the structure associated with it does not have the rails for the
 minecart. For the test code, the only change is to the assertion, which
-now contains a `NOT` (Listing CD.2).
+now contains a \code{NOT} (Listing CD.2).
 
 ```java
 
@@ -1577,7 +1578,7 @@ env.expect(minecart).not().toBeAt(starting\_minecart\_pos.withX(x
 
 This test also passes, although it passes instantly, demonstrating a
 current shortcoming of our assertion engine. Because the only assertion
-contains a `NOT`, the first tick of the test results in a `SOFT\_PASS`,
+contains a \code{NOT}, the first tick of the test results in a \code{SOFT\_PASS},
 meaning the test stops executing. This issue could be addressed by
 allowing users to specify a minimum lifetime for the test, giving time
 to check for unwanted behavior.
@@ -1645,7 +1646,7 @@ Minestom, and it assumes that Minestom features are properly working. At
 the time of writing, however, Minestom does not have strong testing of
 internal components. Canary could help fill this gap. Testing internals
 are not dissimilar to testing applications built on top, and many
-principals would stay accurate. When testing in userland, you may
+principals would stay accurate. When testing user applications, you may
 generally ignore the client because the server acts as an adapter and is
 assumed to be working. To test the server, the client must be included.
 A system such as the attempt at creating a mock client for Minestom can
@@ -1744,27 +1745,27 @@ Minestom projects in the future.
 
 When a Java class is requested by another class, for example by calling
 its constructor, the class is loaded into the Java Virtual Machine (JVM)
-by a `java.lang.ClassLoader`. The language allows multiple class loaders
+by a \code{java.lang.ClassLoader}. The language allows multiple class loaders
 to exist in a tree, which imposes restrictions on which classes can be
 accessed where. Class loaders form a bottom-up tree structure where
 class loaders know their parent, but not their children. Using the class
 loader setup in Figure AA.1 as an example, class loader A and B both
 have a shared parent of the root class loader. All classes must be
 loaded into a single class loader, which determines whether they are
-able to access other classes. For example, `ClassA` is loaded into class
-loader A. Classes may \_only\_ access other classes in their own class
-loader or in a parent. In this case, `ClassA` may access `Main` and
-`StringUtil`, but \_not\_ `ClassB`. In the same respect, `Main` may not
-access `ClassA` or `ClassB`. When a class loader is instructed to load a
-class, it will first attempt to load the class from a parent class
+able to access other classes. For example, \code{ClassA} is loaded into class
+loader A. Classes may \emph{only} access other classes in their own class
+loader or in a parent. In this case, \code{ClassA} may access \code{Main} and
+`StringUtil`, but \emph{not} \code{ClassB}. In the same respect, \code{Main} may 
+not access \code{ClassA} or \code{ClassB}. When a class loader is instructed to 
+load a class, it will first attempt to load the class from a parent class
 loader, and then try to load it in itself. In Listing AA.1, this means
-that if class loader A requests `ClassA`, it will return the loaded
-version. However, if the root class loader requests `ClassA`, a new,
+that if class loader A requests \code{ClassA}, it will return the loaded
+version. However, if the root class loader requests \code{ClassA}, a new,
 unique, instance will be loaded onto the root class loader. Having
 duplicate instances of the same class can cause significant problems
-because they are \_not\_ convertible (for example, an instance of
-`ClassA` from class loader A cannot be assigned to a variable of type
-`ClassA` from the root class loader). This system is relevant to
+because they are \emph{not} convertible (for example, an instance of
+\code{ClassA} from class loader A cannot be assigned to a variable of type
+\code{ClassA} from the root class loader). This system is relevant to
 Minestom because Minestom uses the Mixin framework.
 
 \includegraphics[width=4.71875in,height=1.7856in]{media/media/image1.png}
@@ -1776,9 +1777,9 @@ modification of Java classes. It hooks into the class loading process to
 modify the bytecode of the loading class. This allows a user to modify
 an existing class of a library without having to compile a new version
 or fork the project. Listing AA.2 shows an example Mixin which will add
-a system print to the first line of `CanaryTestEngine\#discover` at
+a system print to the first line of \code{CanaryTestEngine\#discover} at
 runtime. Listing AA.3 shows the definition of
-`CanaryTestEngine\#discover` at compile time and then at runtime after
+\code{CanaryTestEngine\#discover} at compile time and then at runtime after
 the Mixin has been applied. Minestom includes the Mixin framework so
 that extensions (Minestom's plug-in system) are able to modify Minestom
 classes without requiring a fork of the project.
@@ -1897,11 +1898,11 @@ Additionally, in the future the API will likely be split away from the
 JUnit test engine implementation, creating a more complex dependency
 setup. Next, the plugin creates a task to start the sandbox server. The
 sandbox server may be started manually by invoking it's main class
-(com.mattworzala.canary.internal.launch.SandboxLauncher); however, there
+(\code{com.mattworzala.canary.internal.launch.SandboxLauncher}); however, there
 are some required command line arguments which would have to be added
 manually. These options are configurable through the Gradle plugin. An
 example usage can be seen in Listing AB.1. The plugin is added via its
-ID (com.mattworzala.canary) and then may be configured through the
+ID (\code{com.mattworzala.canary}) and then may be configured through the
 canary block. In this sample, only the Canary version is being
 configured.
 
@@ -1934,23 +1935,23 @@ for internal tooling as well. As described in Appendix A, Canary
 requires strict isolation between the JUnit Classloader and the Minestom
 Classloader. As such, a reference to a JUnit class, such as
 CanaryTestEngine (the JUnit engine implementation) is invalid from a
-Minestom server class, such as HeadlessServer. To prevent accidental
+Minestom server class, such as \code{HeadlessServer}. To prevent accidental
 references, we created a Java compiler plugin to enforce this isolation.
 A Java compiler plugin is similar to an annotation processor; however,
 it is given direct access to the Abstract Syntax Tree (AST) and may
 manipulate it with much more freedom. The downside, however, is that the
-javac Application Programming Interface (API) does not have the same
+\code{javac} Application Programming Interface (API) does not have the same
 backwards compatibility guarantees as the annotation processor API. In
 this case, a compiler plugin is required because annotation processors
 do not have access to import statements. The Canary compiler plugin (or
 safety checks) works by looking at import statements and the @Env
 annotation. The annotation is used on class definitions and tells the
 safety checker what environment (class loader) the class may be used in.
-The valid options are GLOBAL for classes available in both class loaders
-and PLATFORM / MINESTOM for JUnit/Minestom respectively. With this
+The valid options are \code{GLOBAL} for classes available in both class loaders
+and \code{PLATFORM} / \code{MINESTOM} for JUnit/Minestom respectively. With this
 information, errors can be generated from invalid import statements.
 Figure AB.2 shows an error generated by the safety checker when
-importing CanaryTestEngine from HeadlessServer.
+importing \code{CanaryTestEngine} from \code{HeadlessServer}.
 
 ```
 
