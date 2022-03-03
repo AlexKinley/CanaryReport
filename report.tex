@@ -7,7 +7,7 @@
 
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
+\usepackage[american]{babel}
 \usepackage{listings}
 \usepackage{titlesec}
 \usepackage{hanging}
@@ -21,7 +21,10 @@
 \usepackage[toc,page]{appendix}
 \DeclareTOCStyleEntry[beforeskip=.1em plus 1pt, pagenumberformat=\textbf]{tocline}{section}
 \usepackage{adjustbox}
-\usepackage[english]{babel}
+\usepackage[american]{babel}
+\usepackage[style=apa]{biblatex}
+\addbibresource{citations.bib}
+\usepackage{csquotes}
 \setlength{\parindent}{4em}
 \setlength{\parskip}{0.5em}
 \usepackage{array}
@@ -284,29 +287,25 @@ methodologies put testing front and center. One such example is
 test-driven development (TDD). TDD is a series of steps and guidelines
 to follow when developing software. The core of TDD involves writing and
 running small unit tests for a feature before actually writing the code
-that implements the feature (Bhat \& Nagappan, 2006). TDD promises to
-substantially improve software quality without having a significant
-impact on overall productivity. The practice is somewhat controversial
-within the software development community, with varying and inconclusive
-evidence as to whether it is superior to other agile development
-practices (Karac \& Turhan, 2018). Regardless of the exact benefits of
-TDD, its existence and supporters demonstrate a general shift in the
-software development community towards placing higher importance on
-automated software testing.
+that implements the feature \parencite{bhat2006evaluating}. 
+TDD promises to substantially improve software quality without having a significant impact on overall productivity. The practice is somewhat controversial within the software development community, with varying and inconclusive
+evidence as to whether it is superior to other agile development practices \parencite{karac2018we}. 
+Regardless of the exact benefits of TDD, its existence and supporters demonstrate a general shift in the software development community towards placing higher importance on automated software testing.
 
 Video games are no exception to the need for testing. Current practices
 in the game development industry involve a large amount of manual
 testing. This manual testing generally aims to verify that the program
 behaves correctly in all scenarios. Because of this reliance on manual
 testing, there have been attempts to automate some or all of that work.
-As discussed by Politowski et al. (2021) game developers have created
+As discussed by \textcite{politowski2021survey} game developers have created
 many different testing strategies and methodologies for their games.
 These range from unit tests and lightweight integration tests, to
 applying machine learning to create smart bots to test their games. One
 common testing method is scenario-based testing. This method
 encapsulates a whole family of strategies involving using a
 human-defined starting state and a series of inputs or actions
-(Albaghajati \& Ahmed, 2020). The scenario being tested could be playing
+\parencite{albaghajati2020video}. 
+The scenario being tested could be playing
 through a level using pre-recorded inputs, or it can be much smaller in
 scope such as ensuring that the game renders correctly in certain
 predefined situations. Scenario-based testing works best when the
@@ -318,7 +317,7 @@ generally remain consistent, even if other parts of the game change.
 
 \subsection{Unit Testing}
 
-As defined by Huizinga (2007), unit testing is a type of automated
+As defined by \textcite{Huizinga2007}, unit testing is a type of automated
 testing where tests target the smallest functional unit of a codebase,
 such as a class or a function. Unit tests are often as simple as giving
 a known input to a function, and checking that the returned value is as
@@ -331,8 +330,8 @@ that the code continues to function properly.
 A well-tested code base can have hundreds or thousands of individual
 unit tests. Because of this, it is important that unit tests are simple
 to write and simple to run. To this end, the Java framework JUnit
-provides a simple and powerful way to test Java code (Rakshith \&
-Manjunath, 2020). The library handles letting developers define their
+provides a simple and powerful way to test Java code \parencite{rakshith2020comprehensive}. 
+The library handles letting developers define their
 tests, executing the tests, and reporting on the results. JUnit tests
 are defined as a method annotated with `@Test`. Various assertion
 functions are provided such as `assertEquals` to check if two values are
@@ -379,7 +378,8 @@ by a framework to allow automation of things such as user inputs,
 navigating a page, or verifying that the correct result is being shown.
 In the case of websites, the Selenium browser automation project allows
 users to programmatically control and get data from a web browser such
-as Chrome or Firefox (Selenium Project, 2021). This enables developers
+as Chrome or Firefox \parencite{seleniumproject}. 
+This enables developers
 to create end-to-end tests of their web applications by testing them in
 the exact environment they will be run in by users: a web browser.
 
@@ -399,7 +399,8 @@ industry. End-to-end testing is not a replacement for unit testing, but
 is instead a method to use in conjunction with unit testing. The `test
 pyramid model' advocates for viewing automated tests as a pyramid with
 unit tests at the bottom and high level end-to-end tests at the top
-(Alger, 2018). The middle of the pyramid consists of integration tests
+\parencite{alger2018}. 
+The middle of the pyramid consists of integration tests
 that ensure that certain systems of the program work together, or
 integrate, correctly. As the pyramid shape implies, there are fewer high
 level end-to-end tests than low level unit tests, but the success of the
@@ -407,7 +408,7 @@ high level tests relies on the correctness of the lower level tests.
 End-to-end testing can be as small as screenshot testing of video games.
 It can be as large as systems like Netflix's Simian Army, which is
 designed to test the robustness of a system by randomly rebooting or
-shutting down servers or even whole datacenters (Tseitlin, 2013).
+shutting down servers or even whole datacenters \textcite{tseitlin2013antifragile}.
 
 Automated software testing is a broad field with a long history. Every
 day, more and more software gets created. Making software that behaves
@@ -420,12 +421,12 @@ foundation to build new testing frameworks from.
 \subsection{Minecraft}
 
 Originating as a small indie game, Minecraft has become the best-selling
-game of all time since its release in 2011 (Mojang, 2019). The game has
+game of all time since its release in 2011 \parencite{mojang2019}(Mojang, 2019). The game has
 been developed in the Java programming language since its inception;
 however, it is now split into two versions: Java Edition and Bedrock
 Edition. Bedrock Edition is developed in C++ and was created after
 Microsoft acquired Mojang Studios (the developer of Minecraft) for \$2.5
-billion in 2014 (Peckham, 2014). Minecraft is a first person game based
+billion in 2014 \parencite{peckham2014}(Peckham, 2014). Minecraft is a first person game based
 in a procedural voxel world. Voxels are analogous to 3D pixels and make
 up uniform cubes in a Minecraft world. These cubes can be created and
 broken by the player to create their own structures. In recent years,
@@ -454,9 +455,9 @@ resource-gathering aspect of the game to focus on player versus player
 Custom Minecraft servers have become incredibly popular in the past few
 years. The most well-known of these servers, Hypixel, hosts nearly
 twenty custom game modes. The server reaches nearly 100,000 concurrent
-players during peak hours of the day (Minecraft-servers, 2022), making
+players during peak hours of the day \parencite{minecraftservers}, making
 it the most popular independently managed game server of all time
-(Guinness World Records, 2017). While there is no public data on the
+\parencite{guinnessindependentserver}. While there is no public data on the
 company's income, it has been estimated that Hypixel makes between five
 million and ten million dollars per year based on employee salary and
 number of employees. The custom game modes featured on the server
@@ -471,7 +472,7 @@ gather resources to fight each other, but there is a twist. Players can
 only regain health through hard-to-acquire "Golden Apples", and the last
 remaining player wins. This game mode features custom items added to the
 game such as an axe which strikes lightning when attacking other players
-(Hypixel Inc., 2022).
+\parencite{hypixelgames}.
 
 \begin{figure}[h] 
     \centering
@@ -497,7 +498,7 @@ custom creature added to the game. These extreme modifications are done
 through a combination of server software modification and the Minecraft
 resource pack system. Resource packs allow ``players to customize
 textures, models, music, sounds, languages, texts such
-as the end poem, splashes, credits, and fonts without any code modification'' (\emph{Resource Pack}, 2022). 
+as the end poem, splashes, credits, and fonts without any code modification'' \parencite{resourcepack}. 
 They can be installed on the client, or sent to the client automatically when joining a server.
 Using resource packs, custom models such as the turkey in Figure \ref{fig:2_4_1_2} can be loaded by the client and moved or animated by the server.
 
@@ -528,7 +529,8 @@ than 10 years ago, and it contains a huge amount of legacy code which
 could be optimized significantly. Minestom, on the other hand, was
 created with a focus on performance, and it does just that. As of April
 2021, it can easily handle more than 1,000 players in a basic
-environment (TheMode, 2021). Since then, internal benchmarks have shown
+environment \parencite{minestom1500players}.
+Since then, internal benchmarks have shown
 Minestom's capability to handle more than 5,000 players at once
 (Minestom Contributors, personal communication, 2022). Additionally,
 Minestom allows the programmer to work at a packet level to implement
@@ -551,7 +553,7 @@ Java and Bedrock Editions of Minecraft. Both tools are named GameTest,
 so they will be referred to as Java GameTest and Bedrock GameTest for
 the purpose of this report. Java GameTest is completely internal,
 whereas Bedrock GameTest was made available to the public in June, 2021
-(Ammerlaan, 2021). Both frameworks operate on the premise that a
+\parencite{ammerlaan2021}. Both frameworks operate on the premise that a
 developer can create a structure inside the game, and write some code to
 operate on the structure as well as make assertions. Listing 2.6.1.1
 shows a sample test from the Bedrock GameTest framework. As seen on
@@ -596,8 +598,7 @@ GameTest.register("StarterTests", "simpleMobTest", simpleMobTest)
 ```
 
 The Java version of GameTest behaves in a similar manner; however, it
-uses Java for test functions instead of JavaScript. According to Henrik
-Knilberg (2020), a member of the Java gameplay team at Mojang, the test
+uses Java for test functions instead of JavaScript. According to \textcite{knilberg2020}, a member of the Java gameplay team at Mojang, the test
 framework has a few central goals. Tests must be easy to read, write,
 and run, they must run visibly in an actual Minecraft world as well as
 on a build server, and they must be quiet on success but verbose on
@@ -621,16 +622,16 @@ In the category of modifications to the Mojang server, there have been
 two major attempts at automated testing: MockBukkit and McTester. Both
 take a programmatic approach to testing and target different use cases.
 MockBukkit provides the user with an API for creating mocked resources
-such as players, worlds, and Bukkit plugins (Schaetzen, 2022). This
-approach allows for a variety of testing methods; however, since the
+such as players, worlds, and Bukkit plugins \parencite{mockbukkit}. 
+This approach allows for a variety of testing methods; however, since the
 tests are created programmatically, even simple tests are time consuming
 to write. McTester works by running a modified Minecraft client which
 allows the test code to submit commands to the client. The server can
 then make assertions about the result of the client actions server side.
 For example, a test could include a client right-clicking a Command
 Block and asserting that the GUI was only opened if the player had
-appropriate permission (Hill, 2022). This method of end-to-end testing
-is effective for testing a server implementation, such as testing
+appropriate permission \parencite{mctester}. 
+This method of end-to-end testing is effective for testing a server implementation, such as testing
 Minestom internally. Unfortunately, it introduces unnecessary overhead
 for testing applications built on top of Minestom. Applications
 generally do not interact with the client directly, and the actual
@@ -1389,8 +1390,8 @@ complex situation due to the long-running nature of the tests. In most
 testing frameworks, errors are presented as the difference between the
 expected and actual result. Canary assertions can be complex and not
 necessarily dependent on any single tick of the test. For example,
-consider the assertion \word{pos=\textless3,1,3\textgreater{}}. If the subject
-never reaches the position \word{\textless3,1,3\textgreater{}} before the time
+consider the assertion \code{pos=\textless3,1,3\textgreater{}}. If the subject
+never reaches the position \code{\textless3,1,3\textgreater{}} before the time
 runs out, then presenting the user with the final position is not
 necessarily helpful. For cases such as this, Canary records a log file
 every frame containing the output of each assertion. This data can be
@@ -1731,15 +1732,17 @@ behavior, and we believe that testing can and will become a standard for
 Minestom projects in the future.
 
 \end{onehalfspacing} % Return to single spacing
-\addcontentsline{toc}{section}{References} % Add the 'References' section to the table of contents
-\bibliographystyle{ieeetr} % Set the bibliography style
-\begin{onehalfspacing}
+
+% \addcontentsline{toc}{section}{References} % Add the 'References' section to the table of contents
+\printbibliography
+%\bibliographystyle{ieeetr} % Set the bibliography style
 %\bibliography{bibliography.bib} % Generate a bibliography from the .bib file with all of the references
 %\hypertarget{references}{%
 %\section{References}\label{references}}
 
 %To be added in the final version, individual sources are found commented
 %in the relevant location.
+\begin{onehalfspacing}
 
 \section{Appendix A: Java Classes \& Runtime Modification}
 
