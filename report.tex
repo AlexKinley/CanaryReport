@@ -19,7 +19,7 @@
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{mathrsfs}
-\usepackage{caption}
+\usepackage[justification=centering]{caption}
 \usepackage{tocbasic}
 \usepackage[toc,page]{appendix}
 \DeclareTOCStyleEntry[beforeskip=.1em plus 1pt, pagenumberformat=\textbf]{tocline}{section}
@@ -102,6 +102,8 @@
 }
 
 \lstset{style=mystyle}
+\usepackage{enumitem}
+\setlist{nosep}
 %========================%
 % Beginning of Document  %
 %========================%
@@ -189,10 +191,10 @@ We would like to thank the following people for their involvement and help throu
 
 %% OR %
 
-\begin{itemize} % Start a bulletted list
+\begin{enumerate} % Start a bulletted list
     \item Joshua Cuneo, our project advisor
     \item 
-\end{itemize}
+\end{enumerate}
 
 \newpage % Start new page 
 \tableofcontents % Table of contents
@@ -267,6 +269,7 @@ programmatically perform the additional steps such as spawning entities
 or interacting with blocks. Finally, assertions can be made on the
 behavior of the situation.
 
+\newpage
 \section{Background}
 
 Currently, there are no other existing libraries that implement what
@@ -432,7 +435,7 @@ high level tests relies on the correctness of the lower level tests.
 End-to-end testing can be as small as screenshot testing of video games.
 It can be as large as systems like Netflix's Simian Army, which is
 designed to test the robustness of a system by randomly rebooting or
-shutting down servers or even whole datacenters \textcite{tseitlin2013antifragile}.
+shutting down servers or even whole datacenters \parencite{tseitlin2013antifragile}.
 
 Automated software testing is a broad field with a long history. Every
 day, more and more software gets created. Making software that behaves
@@ -445,13 +448,13 @@ foundation to build new testing frameworks from.
 \subsection{Minecraft}
 
 Originating as a small indie game, Minecraft has become the best-selling
-game of all time since its release in 2011 \parencite{mojang2019}(Mojang, 2019). The game has
-been developed in the Java programming language since its inception;
+game of all time since its release in 2011 \parencite{mojang2019}. 
+The game has been developed in the Java programming language since its inception;
 however, it is now split into two versions: Java Edition and Bedrock
 Edition. Bedrock Edition is developed in C++ and was created after
 Microsoft acquired Mojang Studios (the developer of Minecraft) for \$2.5
-billion in 2014 \parencite{peckham2014}(Peckham, 2014). Minecraft is a first person game based
-in a procedural voxel world. Voxels are analogous to 3D pixels and make
+billion in 2014 \parencite{peckham2014}. Minecraft is a first person game based
+in a procedural voxel world (Figure \ref{fig:2_4_1}). Voxels are analogous to 3D pixels and make
 up uniform cubes in a Minecraft world. These cubes can be created and
 broken by the player to create their own structures. In recent years,
 however, Minecraft has turned into much more than a simple sandbox game.
@@ -461,7 +464,7 @@ however, Minecraft has turned into much more than a simple sandbox game.
 \begin{figure}[h] 
     \centering
     \includegraphics[width=0.75\textwidth]{media/media/image2.jpg} 
-    \caption{Example Minecraft world \\ (\href{https://live.staticflickr.com/8167/7659790494_78158cf095_b.jpg}{{https://live.staticflickr.com/8167/7659790494\_78158cf095\_b.jpg}}). CC BY-NC 2.0} 
+    \caption{Example Minecraft world \protect \\ (\href{https://live.staticflickr.com/8167/7659790494_78158cf095_b.jpg}{{https://live.staticflickr.com/8167/7659790494\_78158cf095\_b.jpg}}). CC BY-NC 2.0} 
     \label{fig:2_4_1} 
 \end{figure}
 
@@ -488,7 +491,7 @@ number of employees. The custom game modes featured on the server
 include "Bedwars", a game where players team up to protect their bed
 while attempting to destroy the other teams' beds at the same time. This
 game mode adds new mechanics to Minecraft for gathering resources and
-fighting opponents. Figure 2.4.1.1 shows a Bedwars game in progress.
+fighting opponents. Figure \ref{fig:2_4_1_1} shows a Bedwars game in progress.
 Some of the modified elements include the scoreboard on the right side
 and health and team display above each player. Another game mode, "UHC
 Champions", spawns players in a limited Minecraft world where they must
@@ -526,7 +529,7 @@ as the end poem, splashes, credits, and fonts without any code modification'' \p
 They can be installed on the client, or sent to the client automatically when joining a server.
 Using resource packs, custom models such as the turkey in Figure \ref{fig:2_4_1_2} can be loaded by the client and moved or animated by the server.
 
-\begin{figure}[h] 
+\begin{figure}[H] 
     \centering
     \includegraphics[width=0.75\textwidth]{media/media/image4.png} 
     \caption{Custom turkey creature added to Minecraft, by Origin
@@ -581,17 +584,15 @@ whereas Bedrock GameTest was made available to the public in June, 2021
 developer can create a structure inside the game, and write some code to
 operate on the structure as well as make assertions. Listing \ref{lst:2_6_1_1}
 shows a sample test from the Bedrock GameTest framework. As seen on
-lines 17--19, a test is registered with a structure to contain the test,
+lines 15--17, a test is registered with a structure to contain the test,
 and a function to set up the initial state and make assertions. The
 example test requires that the victim--a fox in this case--is in the
-test area when it starts (Line 10) and not when it ends (Lines 12--14).
+test area when it starts (Line 8) and not when it ends (Lines 10--12).
 
 
 %// Listing 2.6.1.1
 \begin{longcode}
 \begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{js}
-// Adapted from https://docs.microsoft.com/en-us/minecraft/creator/documents/gametestbuildyourfirstgametest
-
 function simpleMobTest(test) {
   const attackerId = "fox";
   const victimId = "chicken";
@@ -611,7 +612,8 @@ GameTest.register("StarterTests", "simpleMobTest", simpleMobTest)
   .structureName("startertests:mediumglass");
 
 \end{minted}
-\caption{Example test code for Bedrock GameTest}
+\caption{Example test code for Bedrock GameTest \\ Adapted from \url{https://docs.microsoft.com/en-us/minecraft/creator/documents/gametestbuildyourfirstgametest}
+}
 \label{lst:2_6_1_1}
 \end{longcode}
 
@@ -664,6 +666,7 @@ the received packets. Similar to McTester, this can be effective for
 testing internal features; however, it becomes cumbersome to work on a
 packet level when testing user created features.
 
+\newpage
 \section{Requirements}
 
 As previously discussed, this project aims to fill a void in the
@@ -705,7 +708,7 @@ the track. Canary allows developers to define the setup (structure) for
 a test, as well as the expected outcome, and then execute the test on
 its own. The required functionality is as follows:
 
-\begin{itemize}
+\begin{enumerate}
 \item
   Define the starting state of a test, including the blocks, block
   properties, and entities.
@@ -714,14 +717,14 @@ its own. The required functionality is as follows:
 \item
   Run the test until it passes or fail if it has not passed during a set
   lifetime.
-\end{itemize}
+\end{enumerate}
 
 Determining if the expected outcome happened, in general, is a
 challenging problem. There are a wide variety of things that someone
 might look for to determine if a test ran correctly. Examples include
 looking for an entity to get to a location, looking for a block to be in
 a certain state, making sure some condition did not happen, or checking
-for things to happen in a certain order. Section 4.2 discusses
+for things to happen in a certain order. Section \ref{assertions} discusses
 assertions more in-depth.
 
 This category of feature benefits the most from end-to-end testing.
@@ -740,12 +743,12 @@ settings. Server commands, unlike entity and block behavior, frequently
 affect things far beyond the player, including internal server state. To
 test server commands we should be able to do the following:
 
-\begin{itemize}
+\begin{enumerate}
 \item
   Execute a command from a simulated player with a known starting state.
 \item
   Check for the expected behavior of the command.
-\end{itemize}
+\end{enumerate}
 
 Server commands present a particular challenge because their behavior is
 not bound in any way. A server command can do anything from changing a
@@ -767,13 +770,13 @@ interactions, like server commands, can affect all aspects of the world
 and the players in it. Enabling developers to test player interactions
 requires the following:
 
-\begin{itemize}
+\begin{enumerate}
 \item
   Simulate a player from a known starting state in a known context
   interacting with the world in some particular way.
 \item
   Check for the expected behavior of the interaction.
-\end{itemize}
+\end{enumerate}
 
 Player interaction often causes changes that can be challenging to test.
 The changes may interfere with other tests, or require careful setup and
@@ -800,9 +803,9 @@ can create a list of the high level requirements of Canary. We have
 split the requirements into two categories, based on our original goals
 of ease of use and full feature coverage.
 
-\textbf{Ease of Use}
+\noindent\textbf{Ease of Use}
 
-\begin{itemize}
+\begin{enumerate}
 \item
   Canary must be easy for developers to use, including creating,
   running, and debugging tests.
@@ -821,11 +824,11 @@ of ease of use and full feature coverage.
   (CI/CD) servers.
 \item
   Integrate nicely with version control.
-\end{itemize}
+\end{enumerate}
 
-\textbf{Feature Coverage}
+\noindent\textbf{Feature Coverage}
 
-\begin{itemize}
+\begin{enumerate}
 \item
   Canary must be applicable to all major use cases; in particular,
   custom block and entity behavior should be able to be tested by
@@ -834,8 +837,9 @@ of ease of use and full feature coverage.
   Developers should be able to express complex scenarios in their tests.
 \item
   Cover most common usage and allow for easy developer extension.
-\end{itemize}
+\end{enumerate}
 
+\newpage
 \section{Implementation}
 
 With the high level requirements determined, they must be translated
@@ -885,7 +889,7 @@ world containing just the structure they are creating or editing (Figure
 track all of the blocks that are part of the structure, and there is no
 risk of other parts of the world interfering with creating the
 structure.
-\begin{figure}[h] 
+\begin{figure}[H] 
     \centering
     \includegraphics[width=0.75\textwidth]{media/media/image9.png} 
     \caption{Example of a structure in the test builder} 
@@ -1072,24 +1076,20 @@ structure file.
 The fields of the JSON file in Listing \ref{lst:tb_1} are specified as such.
 
 \noindent\textbf{id}
-
 Some unique id to be referenced from the test code.
 
 \noindent\textbf{size}
-
 The x, y, and z size of the structure, with a max of 48, 48, 48.
 
 \noindent\textbf{markers}
-
 An object where each key-value pair represents the name and position
 index of the marker. The position indexing uses the same scheme as
 described for the block's value.
 
 \noindent\textbf{blockmap}
-
 An array where each element represents a block which is used in the
-structure; a block id of \code{-1} represents a block of air with no additional
-properties. A block can have a type, tags, a handler, and additional
+structure; a block id of \code{-1} represents a block of air with no additional properties.
+A block can have a type, tags, a handler, and additional
 data. A block object has a block, handler, and data field. The handler
 and data fields correspond directly to the handler and additional data
 of the block they represent. The block field represents both the block
@@ -1101,7 +1101,6 @@ just has a type and tags, it can just be stored using a string equal to
 what the block string of it's object would be.
 
 \noindent\textbf{blocks}
-
 A run length encoding of the blocks for the test. The semicolons
 separate each block definition. A block definition starts with a block
 id reference the blockmap array, followed by a number of blocks. Since
@@ -1129,7 +1128,7 @@ format is not the most optimal way to compress this information, but we
 have found it does well enough in most use cases, while being easy to
 output and parse.
 
-\subsection{Assertion Engine}
+\subsection{Assertion Engine}\label{assertions}
 
 Assertions and their associated Application Programming Interface (API)
 are an integral part of Canary and one of the most user-facing elements.
@@ -1149,7 +1148,6 @@ typical interpreted programming language: assertions themselves
 (syntax), and the backing assertion nodes (AST). The syntax of a typical
 assertion in Canary can be found in Listing \ref{lst:4_2_1}.
 
-%// Listing 4.2.1
 \begin{listing}[H]
 \begin{minted}[linenos]{java}
   expect(myZombie).toBeAt(3, 1, 3).and().toHaveHealth(20.0);
@@ -1157,7 +1155,6 @@ assertion in Canary can be found in Listing \ref{lst:4_2_1}.
 \caption{Example assertion}
 \label{lst:4_2_1}
 \end{listing}
-
 The syntax is legible like plain English, e.g. "I expect that my zombie
 will be at \code{\textless3,1,3\textgreater{}} and have \code{20} health". In this
 report, an assertion may be referenced using the following abstract
@@ -1198,7 +1195,7 @@ interpreter, and it allows the test executor to simply check the root
 node to determine the result of the assertion. The nodes recursively
 process until all branches have been evaluated or an early exit has been
 reached. The test executor acts on the result of the assertion tree, as
-described in Section 4.5.
+described in Section \ref{testex}.
 
 \subsubsection{Soft Pass}
 
@@ -1208,7 +1205,7 @@ user to invert the statement directly following. For example, \code{NOT
 health=20.0} says that it will fail if the subject's health is equal to
 \code{20}. By defining what causes an assertion to fail, it becomes difficult
 to determine when it has passed. Assertions are executed every server
-tick until they return a \code{PASS} (further described in Section 4.5). If,
+tick until they return a \code{PASS} (further described in Section \ref{testex}). If,
 for example, the subject has a starting health of \code{10}, then on the first
 frame this assertion will return \code{PASS} and never be tested again. The
 solution to this problem is to introduce a third state to the equation:
@@ -1304,7 +1301,7 @@ versions, meaning the file must be updated. Each entry in the file
 contains the time (since start of recording, in milliseconds) that the
 packet occurred, and the packet data itself. A detailed description of
 the file format can be found on
-\href{https://gist.github.com/mworzala/13abec46e1114bde479cb0c9e7e8d888}{{GitHub}}.
+\href{https://gist.github.com/mworzala/13abec46e1114bde479cb0c9e7e8d888}{{GitHub}}\footnote{\url{https://gist.github.com/mworzala/13abec46e1114bde479cb0c9e7e8d888}}.
 Once loaded, a fake player is created which submits the packets to the
 server according to the time they occurred in the CPR file.
 
@@ -1321,7 +1318,7 @@ hitting it with a sword to ensure that damage is dealt in player versus
 player combat. Another issue with the packet recording mechanism is the
 initial Player state.
 
-\subsection{Test Executor}
+\subsection{Test Executor}\label{testex}
 
 The Canary test executor is responsible for managing the testing
 environment and complying with the JUnit test engine specification. When
@@ -1405,7 +1402,7 @@ when using Canary should increase.
 
 To achieve the goal of simplicity from a user perspective, Canary
 provides a utility for various tasks inside the test environment. This
-class, TestEnvironment, provides safe access to the Minestom instance
+class, \code{TestEnvironment}, provides safe access to the Minestom instance
 for common tasks such as spawning entities. In sandbox mode, tests may
 be executed multiple times, so they must be cleaned up properly to avoid
 creating false positives or negatives from leftover changes to the
@@ -1509,6 +1506,7 @@ identify failing tests in the sandbox.
 %Figure 4.3.4.3: Red and green beacons indicating success and failure of
 %a test.
 
+\newpage
 \section{Discussion}
 
 We set out to create an end-to-end testing framework for Minestom
@@ -1571,7 +1569,7 @@ implementation.
 %Figure 5.1.1.1: From left to right, test 1, test 2, and test 3 before
 %being run
 
-\noindent\textbf{Test 1: straight line track}
+\noindent\textbf{Test 1: straight line track.}
 
 This test aimed to verify that when a minecart was placed on rails, it
 would travel along those rails. The structure for the test consists of 3
@@ -1610,7 +1608,7 @@ passing, with the green beacon to indicate success.
 
 %Figure 5.1.1.2: Test 1 after passing
 
-\noindent\textbf{Test 2: No Track}
+\noindent\textbf{Test 2: no track.}
 
 This test verifies that the minecart only moves forward when it is on
 top of rails. The structure and code are nearly identical to test 1,
@@ -1639,7 +1637,7 @@ meaning the test stops executing. This issue could be addressed by
 allowing users to specify a minimum lifetime for the test, giving time
 to check for unwanted behavior.
 
-\noindent\textbf{Test 3: Gravity}
+\noindent\textbf{Test 3: gravity.}
 
 This tests for a behavior that is currently not implemented correctly:
 the ability to fall off one rail and land on another lower down.
@@ -1663,9 +1661,14 @@ case, the test timed out.
 \begin{figure}[H] 
     \centering
     \includegraphics[width=0.75\textwidth]{media/media/image14.png} 
-    \caption{The error message for test 3} 
+    \caption[The error message for test 3]%
+    {The error message for test 3\footnotemark} 
+
+    %{The error message for test 3\footnote{Thanks to github user CommandCracker8 for contributing this functionality}} 
     \label{fig:5_1_1_4}  
 \end{figure}
+
+\footnotetext{Thanks to github user CommandCracker8 for contributing this functionality}
 %\includegraphics[width=5.8125in,height=3.20414in]{media/media/image14.png}
 
 %Figure 5.1.1.4: The error message for test 3
@@ -1773,6 +1776,7 @@ workflow where a Canary sandbox is always running, and multiple people
 cases while doing so, all working towards a shared understanding of the
 intended functionality.
 
+\newpage
 \section{Conclusion}
 
 Canary is a framework with surgical precision in scope. Because it is
@@ -1797,7 +1801,8 @@ Minestom projects in the future.
 
 \end{onehalfspacing} % Return to single spacing
 
-% \addcontentsline{toc}{section}{References} % Add the 'References' section to the table of contents
+\newpage
+\addcontentsline{toc}{section}{References} % Add the 'References' section to the table of contents
 \printbibliography
 %\bibliographystyle{ieeetr} % Set the bibliography style
 %\bibliography{bibliography.bib} % Generate a bibliography from the .bib file with all of the references
@@ -1808,7 +1813,9 @@ Minestom projects in the future.
 %in the relevant location.
 \begin{onehalfspacing}
 
-\section{Appendix A: Java Classes \& Runtime Modification}
+\newpage
+\addcontentsline{toc}{section}{Appendix A}
+\section*{Appendix A: Java Classes \& Runtime Modification}
 
 When a Java class is requested by another class, for example by calling
 its constructor, the class is loaded into the Java Virtual Machine (JVM)
@@ -1822,7 +1829,7 @@ loaded into a single class loader, which determines whether they are
 able to access other classes. For example, \code{ClassA} is loaded into class
 loader A. Classes may \emph{only} access other classes in their own class
 loader or in a parent. In this case, \code{ClassA} may access \code{Main} and
-`StringUtil`, but \emph{not} \code{ClassB}. In the same respect, \code{Main} may 
+\code{StringUtil}, but \emph{not} \code{ClassB}. In the same respect, \code{Main} may 
 not access \code{ClassA} or \code{ClassB}. When a class loader is instructed to 
 load a class, it will first attempt to load the class from a parent class
 loader, and then try to load it in itself. In Listing \ref{lst:aa2}, this means
@@ -1941,7 +1948,7 @@ Mixin requires that all classes are loaded into a Mixin-enabled class
 loader so that it can intercept and modify the classes as they are
 loaded. To enable this, Minestom provides a bootstrap class to set up
 the Mixin environment and then invoke the developers' main class.
-Listing AA.4 shows an example initialization for a Minestom project.
+Listing \ref{lst:aa4} shows an example initialization for a Minestom project.
 Unfortunately, this system requires that the developer is in charge of
 where classes are loaded. Inside a JUnit test engine, this is not the
 case. JUnit instantiates the test engine class and manages loading the
@@ -1953,7 +1960,7 @@ working, and the Minestom server class loader where the server and tests
 are running. Since test classes are loaded into the JUnit class loader
 but executed in the Minestom class loader, they must be reloaded before
 execution. This system adds significant complexity and safety
-requirements to Canary (see Appendix B); however, it comes with an
+requirements to Canary (see Appendix \ref{appendixb}); however, it comes with an
 advantage past enabling Mixin support. Because the test engine is
 independent from the server, it is possible to start multiple
 independent Minestom servers which could provide complete isolation
@@ -1996,7 +2003,9 @@ Minestom removed Mixin support. This means that the system will no
 longer be required for Minestom versions going forwards unless Canary
 itself needs to use Mixins to modify Minestom for any reason.
 
-\section{Appendix B: Tooling}
+\newpage
+\addcontentsline{toc}{section}{Appendix B}
+\section*{Appendix B: Tooling}\label{appendixb}
 
 Canary has some complex systems to manage class loaders and assertions,
 but to aid in development and usage, we created some external supporting
@@ -2083,7 +2092,7 @@ safety checker what environment (class loader) the class may be used in.
 The valid options are \code{GLOBAL} for classes available in both class loaders
 and \code{PLATFORM} / \code{MINESTOM} for JUnit/Minestom respectively. With this
 information, errors can be generated from invalid import statements.
-Figure \ref{ab2} shows an error generated by the safety checker when
+Figure \ref{lst:ab2} shows an error generated by the safety checker when
 importing \code{CanaryTestEngine} from \code{HeadlessServer}.
 
 \begin{listing}[H]

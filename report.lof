@@ -1,32 +1,32 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \babel@toc {american}{}\relax 
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {1}{\ignorespaces Example Minecraft world (\href {https://live.staticflickr.com/8167/7659790494_78158cf095_b.jpg}{{https://live.staticflickr.com/8167/7659790494\_78158cf095\_b.jpg}}). CC BY-NC 2.0\relax }}{6}{figure.caption.2}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Example Minecraft world \\ (\href {https://live.staticflickr.com/8167/7659790494_78158cf095_b.jpg}{{https://live.staticflickr.com/8167/7659790494\_78158cf095\_b.jpg}}). CC BY-NC 2.0\relax }}{7}{figure.caption.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2}{\ignorespaces Bedwars game in progress, Hypixel, 2021 (\url {https://www.sportskeeda.com/minecraft/top-5-things-players-know-bedwars-minecraft}). \relax }}{7}{figure.caption.3}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Bedwars game in progress, Hypixel, 2021 (\url {https://www.sportskeeda.com/minecraft/top-5-things-players-know-bedwars-minecraft}). \relax }}{8}{figure.caption.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3}{\ignorespaces Custom turkey creature added to Minecraft, by Origin Realms, 2022 (\url {https://originrealms.com/blog/harvesting-update}). \relax }}{8}{figure.caption.4}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Custom turkey creature added to Minecraft, by Origin Realms, 2022 (\url {https://originrealms.com/blog/harvesting-update}). \relax }}{9}{figure.caption.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {4}{\ignorespaces Example tests from the Mojang (Java) GameTest framework\relax }}{10}{figure.caption.6}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Example tests from the Mojang (Java) GameTest framework\relax }}{11}{figure.caption.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5}{\ignorespaces Example of a structure in the test builder\relax }}{16}{figure.caption.7}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Example of a structure in the test builder\relax }}{18}{figure.caption.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {6}{\ignorespaces Autocompletion of existing test structure when using the duplicate command\relax }}{16}{figure.caption.8}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Autocompletion of existing test structure when using the duplicate command\relax }}{18}{figure.caption.8}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {7}{\ignorespaces The bounding box tracks the size of the structure\relax }}{17}{figure.caption.9}%
+\contentsline {figure}{\numberline {7}{\ignorespaces The bounding box tracks the size of the structure\relax }}{20}{figure.caption.9}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {8}{\ignorespaces Example of the anvil prompt for markers\relax }}{18}{figure.caption.10}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Example of the anvil prompt for markers\relax }}{21}{figure.caption.10}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {9}{\ignorespaces Report generated in game when an assertion fails.\relax }}{28}{figure.caption.12}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Report generated in game when an assertion fails.\relax }}{30}{figure.caption.12}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {10}{\ignorespaces Red and green beacons indicating success and failure of a test.\relax }}{28}{figure.caption.13}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Red and green beacons indicating success and failure of a test.\relax }}{30}{figure.caption.13}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {11}{\ignorespaces From left to right, test 1, test 2, and test 3 before being run\relax }}{30}{figure.caption.14}%
+\contentsline {figure}{\numberline {11}{\ignorespaces From left to right, test 1, test 2, and test 3 before being run\relax }}{32}{figure.caption.14}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {12}{\ignorespaces Test 1 after passing\relax }}{31}{figure.caption.15}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Test 1 after passing\relax }}{33}{figure.caption.15}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {13}{\ignorespaces Test 3 after timing out\relax }}{32}{figure.caption.16}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Test 3 after timing out\relax }}{34}{figure.caption.16}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {14}{\ignorespaces The error message for test 3\relax }}{32}{figure.caption.17}%
+\contentsline {figure}{\numberline {14}{\ignorespaces The error message for test 3}}{34}{figure.caption.17}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {15}{\ignorespaces Example class loader hierarchy\relax }}{37}{figure.caption.18}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Example class loader hierarchy\relax }}{40}{figure.caption.18}%
