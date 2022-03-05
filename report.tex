@@ -19,6 +19,7 @@
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{mathrsfs}
+\usepackage{xcolor}
 \usepackage[justification=centering]{caption}
 \usepackage{tocbasic}
 \usepackage[toc,page]{appendix}
@@ -32,16 +33,16 @@
 \setlength{\parskip}{0.5em}
 \usepackage{array}
 \usepackage{hyperref}
+\usepackage{mdframed}
 \onehalfspacing
+\definecolor{linkblue}{rgb}{0.00, 0.00, 0.93} 
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
 \hypersetup{
-    colorlinks=false,
-    allbordercolors={0 0 0},
-    pdfborderstyle={/S/U/W 1}
-    %colorlinks,
-    %%citecolor=black,
-    %linkcolor=black,
-    %filecolor=black,
-    %urlcolor=black,
+    colorlinks,
+    citecolor=black,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=linkblue,
 }
 \newcommand{\MYhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
 \urlstyle{same}
@@ -191,10 +192,11 @@ We would like to thank the following people for their involvement and help throu
 
 %% OR %
 
-\begin{enumerate} % Start a bulletted list
-    \item Joshua Cuneo, our project advisor
-    \item 
-\end{enumerate}
+\begin{itemize} % Start a bulletted list
+    \item Professor Cuneo, our project advisor, for lending his time and wisdom to this project.
+    \item Minestom contributors, particularly TheMode, for their time and effort developing Minestom.
+    \item CommandCracker8, for their contribution to the sandbox instance error reporting.
+\end{itemize}
 
 \newpage % Start new page 
 \tableofcontents % Table of contents
@@ -1044,7 +1046,6 @@ structure file.
 
 %// Listing TB.1
 \begin{longcode}
-
 \begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{json}
 {
     "id": "my-test-world",
@@ -1328,7 +1329,7 @@ appropriate Java ClassLoader, and a Minestom instance is created. An
 "instance" in Minestom is analogous to a Minecraft world and allows the
 test to be completely isolated from all others. When the tests are
 executed, each test structure is placed into its respective instance,
-and the assertion engine parses the step lists (Listing 4.2.2) into
+and the assertion engine parses the step lists (Listing \ref{lst:4_2_2}) into
 assertion trees. Finally, the test instances are ticked until it
 receives a definitive result. The stop conditions for a running test are
 as follows:
@@ -1668,7 +1669,7 @@ case, the test timed out.
     \label{fig:5_1_1_4}  
 \end{figure}
 
-\footnotetext{Thanks to github user CommandCracker8 for contributing this functionality}
+\footnotetext{Thanks to GitHub user CommandCracker8 for contributing the hastebin feature, where the stacktrace is uploaded for the user to view}
 %\includegraphics[width=5.8125in,height=3.20414in]{media/media/image14.png}
 
 %Figure 5.1.1.4: The error message for test 3
@@ -1743,10 +1744,9 @@ a shared understanding of functionality.
 
 %// Listing 5.2.3.1
 
+%// Adapted from https://en.wikipedia.org/wiki/Behavior-driven\_development
 \begin{listing}[H]
 \begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{text}
-// Adapted from https://en.wikipedia.org/wiki/Behavior-driven\_development
-
 Title: Returns go to inventory.
 
 As a store owner,
@@ -1759,7 +1759,8 @@ And I have three black sweaters in inventory,
 When they return the black sweater for a refund,
 Then I should have four black sweaters in inventory.
 \end{minted}
-\caption{Sample BDD test}
+\caption{Sample BDD test \\ Adapted from \url{https://en.wikipedia.org/wiki/Behavior-driven_development}
+}
 \label{lst:5_2_3_1}
 \end{listing}
 %```
@@ -2025,7 +2026,7 @@ sandbox server may be started manually by invoking it's main class
 (\code{com.mattworzala.canary.internal.launch.SandboxLauncher}); however, there
 are some required command line arguments which would have to be added
 manually. These options are configurable through the Gradle plugin. An
-example usage can be seen in Listing \ref{ab1}. The plugin is added via its
+example usage can be seen in Listing \ref{lst:ab1}. The plugin is added via its
 ID (\code{com.mattworzala.canary}) and then may be configured through the
 canary block. In this sample, only the Canary version is being
 configured.
