@@ -5,10 +5,13 @@
 %       to line 78       %
 %========================%
 
-\documentclass{article}
+\documentclass[12pt]{article}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
 \usepackage[utf8]{inputenc}
 \usepackage[american]{babel}
 \usepackage{listings}
+\usepackage{minted}
 \usepackage{titlesec}
 \usepackage{hanging}
 \usepackage{indentfirst}
@@ -32,9 +35,13 @@
 \onehalfspacing
 \hypersetup{
     colorlinks=false,
-    linkcolor=black,
-    filecolor=black,
-    urlcolor=black,
+    allbordercolors={0 0 0},
+    pdfborderstyle={/S/U/W 1}
+    %colorlinks,
+    %%citecolor=black,
+    %linkcolor=black,
+    %filecolor=black,
+    %urlcolor=black,
 }
 \newcommand{\MYhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
 \urlstyle{same}
@@ -80,6 +87,21 @@
 \renewcommand{\listtablename}{Tables}
 \renewcommand{\listfigurename}{Figures}
 
+\renewcommand{\theFancyVerbLine}{\small\arabic{FancyVerbLine}}
+
+
+\newenvironment{longcode}{\captionsetup{type=listing}}{}
+\lstdefinestyle{mystyle}{
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    showspaces=false,                
+    showstringspaces=false,
+}
+
+\lstset{style=mystyle}
 %========================%
 % Beginning of Document  %
 %========================%
@@ -102,34 +124,34 @@
 \begin{center}
     \Huge{\textbf{Creating an End-to-end Testing Framework for an Open Source Minecraft Server}} \\ % Input title of MQP
     \vspace{10mm} % Add vertical space between sections
-    \large{
+    \normalsize{
     A Major Qualifying Project (MQP) Report \\
     Submitted to the Faculty of \\
     WORCESTER POLYTECHNIC INSTITUTE \\
     in partial fulfillment of the requirements \\
     for the Degree of Bachelor of Science in \\
     } % Do not edit this portion
-    \Large{
-    \vspace{5mm} % Add vertical space between sections
+    \large{
+    \vspace{2mm} % Add vertical space between sections
     Computer Science \\ % Input first major
-    \vspace{10mm} % Add vertical space between sections
+    \vspace{5mm} % Add vertical space between sections
     By: \\
     \vspace{2mm} % Add vertical space between sections
     Alexander Kinley \\ % Input first author name
     Matthew Worzala \\ % Input second author name
-    \vspace {15mm} % Add vertical space between sections
-    Project Advisors: \\ % Edit if only one advisor
+    \vspace {8mm} % Add vertical space between sections
+    Project Advisor: \\ % Edit if only one advisor
     \vspace{2mm} % Add vertical space between sections
     Professor Joshua Cuneo \\ % Input name of first advisor
-    \vspace {10mm} % Add vertical space between sections
-    Date: April 2022 \\ % Input date of project submission
+    \vspace {5mm} % Add vertical space between sections
+    Date: March 2022 \\ % Input date of project submission
     }
     \vspace{0mm} % Add vertical space between sections
-    \begin{figure}[h]
+    \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{Images/logo.png} % Set the image width relative to the with of the text on the page and input the name of the image that is being placed.
+    \includegraphics[width=0.35\textwidth]{Images/logo.png} % Set the image width relative to the with of the text on the page and input the name of the image that is being placed.
     \end{figure}
-    \large{\textit{This report represents work of WPI undergraduate students submitted to the faculty as evidence of a degree requirement. WPI routinely publishes these reports on its website without editorial or peer review. For more information about the projects program at WPI, see \url{http://www.wpi.edu/Academics/Projects}.}} % Do not edit this portion
+    \small{\textit{This report represents work of WPI undergraduate students submitted to the faculty as evidence of a degree requirement. WPI routinely publishes these reports on its website without editorial or peer review. For more information about the projects program at WPI, see \url{http://www.wpi.edu/Academics/Projects}.}} % Do not edit this portion
 \end{center}
 
 %========================%
@@ -159,8 +181,7 @@ a functional testing framework along with a demonstration of its usage.
 
 \newpage % Start new page
 \section*{Acknowledgements} % Start the section 'Acknowledgements'. Include the asterisks to keep section unnumbered and off of the table of contents
-
-\noindent Begin list of acknowledgements
+We would like to thank the following people for their involvement and help throughout this project:
 %\begin{enumerate} % Start a numbered list
     %\item First Acknowledgement % Name of first acknowledgement
     %\item Second Acknowledgement % Add new item with '\item'
@@ -169,13 +190,16 @@ a functional testing framework along with a demonstration of its usage.
 %% OR %
 
 \begin{itemize} % Start a bulletted list
-    \item First Acknowledgement % Name of first acknowledgement
-    \item Second Acknowledgement % Add new item with '\item'
+    \item Joshua Cuneo, our project advisor
+    \item 
 \end{itemize}
 
-%\newpage % Start new page 
+\newpage % Start new page 
 \tableofcontents % Table of contents
-\listoftables % List of tables
+%\listoftables % List of tables
+\newpage
+\listoflistings
+\newpage 
 \listoffigures % List of figures
 
 \newpage % Start new page
@@ -333,9 +357,9 @@ to write and simple to run. To this end, the Java framework JUnit
 provides a simple and powerful way to test Java code \parencite{rakshith2020comprehensive}. 
 The library handles letting developers define their
 tests, executing the tests, and reporting on the results. JUnit tests
-are defined as a method annotated with `@Test`. Various assertion
-functions are provided such as `assertEquals` to check if two values are
-the same, or `assertTrue` to check if a boolean value is true. When the
+are defined as a method annotated with \code{@Test}. Various assertion
+functions are provided such as \code{assertEquals} to check if two values are
+the same, or \code{assertTrue} to check if a boolean value is true. When the
 tests are run, JUnit will execute each of the methods annotated as a
 test and report if the test passed or failed.
 
@@ -555,54 +579,48 @@ the purpose of this report. Java GameTest is completely internal,
 whereas Bedrock GameTest was made available to the public in June, 2021
 \parencite{ammerlaan2021}. Both frameworks operate on the premise that a
 developer can create a structure inside the game, and write some code to
-operate on the structure as well as make assertions. Listing 2.6.1.1
+operate on the structure as well as make assertions. Listing \ref{lst:2_6_1_1}
 shows a sample test from the Bedrock GameTest framework. As seen on
-lines 14-16, a test is registered with a structure to contain the test,
+lines 17--19, a test is registered with a structure to contain the test,
 and a function to set up the initial state and make assertions. The
 example test requires that the victim--a fox in this case--is in the
-test area when it starts (Line 8) and not when it ends (Lines 9-11).
+test area when it starts (Line 10) and not when it ends (Lines 12--14).
 
-```js
 
-// Listing 2.6.1.1
+%// Listing 2.6.1.1
+\begin{longcode}
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{js}
+// Adapted from https://docs.microsoft.com/en-us/minecraft/creator/documents/gametestbuildyourfirstgametest
 
-// Adapted from
-https://docs.microsoft.com/en-us/minecraft/creator/documents/gametestbuildyourfirstgametest
+function simpleMobTest(test) {
+  const attackerId = "fox";
+  const victimId = "chicken";
 
-function simpleMobTest(test) \{
+  test.spawn(attackerId, new BlockLocation(5, 2, 5));
+  test.spawn(victimId, new BlockLocation(2, 2, 2));
 
-const attackerId = "fox";
+  test.assertEntityPresentInArea(victimId, true);
 
-const victimId = "chicken";
-
-test.spawn(attackerId, new BlockLocation(5, 2, 5));
-
-test.spawn(victimId, new BlockLocation(2, 2, 2));
-
-test.assertEntityPresentInArea(victimId, true);
-
-test.succeedWhen(() =\textgreater{} \{
-
-test.assertEntityPresentInArea(victimId, false);
-
-\});
-
-\};
+  test.succeedWhen(() => {
+    test.assertEntityPresentInArea(victimId, false);
+  });
+};
 
 GameTest.register("StarterTests", "simpleMobTest", simpleMobTest)
+  .maxTicks(410)
+  .structureName("startertests:mediumglass");
 
-.maxTicks(410)
-
-.structureName("startertests:mediumglass");
-
-```
+\end{minted}
+\caption{Example test code for Bedrock GameTest}
+\label{lst:2_6_1_1}
+\end{longcode}
 
 The Java version of GameTest behaves in a similar manner; however, it
 uses Java for test functions instead of JavaScript. According to \textcite{knilberg2020}, a member of the Java gameplay team at Mojang, the test
 framework has a few central goals. Tests must be easy to read, write,
 and run, they must run visibly in an actual Minecraft world as well as
 on a build server, and they must be quiet on success but verbose on
-failure. Figure 2.6.1.2 shows some examples of what the tests look like.
+failure. Figure \ref{fig:2_6_1_2} shows some examples of what the tests look like.
 Individual test cases are inside the white bounding boxes, and a concise
 output is sent to the player when tests pass. This model serves as a
 great inspiration for creating and running tests inside the game, but it
@@ -612,9 +630,12 @@ implemented. Furthermore, the framework is closed source, so
 modifications are challenging, ineffective in a different environment,
 and cannot be distributed.
 
-\includegraphics[width=6.01042in,height=3.20833in]{media/media/image7.png}
-
-Figure 2.6.1.2: Example tests from the Mojang (Java) GameTest framework
+\begin{figure}[h] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image7.png} 
+    \caption{Example tests from the Mojang (Java) GameTest framework}
+    \label{fig:2_6_1_2} 
+\end{figure}
 
 \subsubsection{Third Party Tools}
 
@@ -860,14 +881,19 @@ will not cause git to see the whole file as changed.
 
 When using the test builder, a player is brought into a separate empty
 world containing just the structure they are creating or editing (Figure
-4.1.1). The advantage of this approach is that it becomes simple to
+\ref{fig:4_1_1}). The advantage of this approach is that it becomes simple to
 track all of the blocks that are part of the structure, and there is no
 risk of other parts of the world interfering with creating the
 structure.
+\begin{figure}[h] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image9.png} 
+    \caption{Example of a structure in the test builder} 
+    \label{fig:4_1_1}  
+\end{figure}
+%\includegraphics[width=6.5in,height=3.56548in]{media/media/image9.png}
 
-\includegraphics[width=6.5in,height=3.56548in]{media/media/image9.png}
-
-Figure 4.1.1: Example of a structure in the test builder
+%Figure 4.1.1: Example of a structure in the test builder
 
 The way that the player controls the test builder--including making a
 new structure or leaving the test builder when they are done creating
@@ -875,32 +901,38 @@ their structure--is through server commands. Server commands are a
 feature of Minecraft that are similar to a command line. Using the
 in-game chat, messages starting with a forward slash are considered
 commands. Minecraft and Minestom have powerful support for commands,
-including named arguments and autocomplete. As seen in Figure 4.1.2,
+including named arguments and autocomplete. As seen in Figure \ref{fig:4_1_2},
 Canary can suggest possible valid inputs when they are known.
 
-\includegraphics[width=6.0625in,height=3.32292in]{media/media/image13.png}
+\begin{figure}[h] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image13.png} 
+    \caption{Autocompletion of existing test structure when using the duplicate command} 
+    \label{fig:4_1_2}  
+\end{figure}
+%\includegraphics[width=6.0625in,height=3.32292in]{media/media/image13.png}
 
-Figure 4.1.2: Autocompletion of existing test structure when using the
-duplicate command.
+%Figure 4.1.2: Autocompletion of existing test structure when using the
+%duplicate command.
 
 The test builder commands available to the player change depending on
 whether or not they are currently in the test builder. When the player
 is not in the test builder, the commands available to them are as
 follows:
 
-\code{/test builder new STRUCTURE\_NAME}
+\noindent\code{/test builder new STRUCTURE\_NAME}
 
 Places the player in a test builder world with the default starting
 structure. When they save the structure, the file will be named
 \code{STRUCTURE\_NAME.json}.
 
-\code{/test builder duplicate STRUCTURE\_NAME NEW\_STURCTURE\_NAME}
+\noindent\code{/test builder duplicate STRUCTURE\_NAME NEW\_STURCTURE\_NAME}
 
 Places the player in a test builder world with structure from
 \code{STRUCTURE\_NAME.json}. When they save the structure, the fill will be
 named \code{NEW\_STRUCTURE\_NAME.json}.
 
-\code{/test builder join CURRENT\_STRUCTURE\_NAME}
+\noindent\code{/test builder join CURRENT\_STRUCTURE\_NAME}
 
 When there is a player currently building a test, this command is how
 you join them in the test builder.
@@ -908,7 +940,7 @@ you join them in the test builder.
 When the player is in the test builder, the commands available to them
 are as follows:
 
-\code{/test builder done}
+\noindent\code{/test builder done}
 
 Saves the current structure and returns the player to wherever they were
 when they entered the test builder.
@@ -922,13 +954,19 @@ updated as players place and remove blocks to always bound the entire
 structure. This is accomplished using a Minecraft structure block. A
 structure block is normally used during world generation in vanilla
 Minecraft, but for our purposes the white bounding box is all we need
-(Figure 4.1.3). A structure block is placed below the build area, and
+(Figure \ref{fig:4_1_3}). A structure block is placed below the build area, and
 its parameters are updated as necessary to change the size and position
 of the bounding box that it creates.
 
-\includegraphics[width=6.07813in,height=3.34897in]{media/media/image11.png}
+\begin{figure}[h] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image11.png} 
+    \caption{The bounding box tracks the size of the structure} 
+    \label{fig:4_1_3}  
+\end{figure}
+%\includegraphics[width=6.07813in,height=3.34897in]{media/media/image11.png}
 
-Figure 4.1.3: The bounding box tracks the size of the structure
+%Figure 4.1.3: The bounding box tracks the size of the structure
 
 The other important functionalities within the test builder are editing
 the properties of blocks and placing markers. Blocks have data
@@ -952,16 +990,22 @@ inventory screen, which has a box for text entry. Using these, we can
 prompt the user to enter information when they click on a block with one
 of the special test builder items. For example, with the set marker
 item, after clicking on the block they want to mark, the user will be
-given an anvil prompt (Figure 4.1.4) where they can enter the desired
+given an anvil prompt (Figure \ref{fig:4_1_4}) where they can enter the desired
 marker name. Then they can click on an item (green glass) used as the
 confirm button or another item (red glass) used for canceling. This will
 then create a marker with that name at that location in the test
 structure. A similar process can be used for the various types of block
 data.
 
-\includegraphics[width=6.16146in,height=3.3967in]{media/media/image8.png}
+\begin{figure}[h] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image8.png} 
+    \caption{Example of the anvil prompt for markers} 
+    \label{fig:4_1_4}  
+\end{figure}
+%\includegraphics[width=6.16146in,height=3.3967in]{media/media/image8.png}
 
-Figure 4.1.4: Example of the anvil prompt for markers
+%Figure 4.1.4: Example of the anvil prompt for markers
 
 Behind the scenes, all of these special items pass the position of the
 block that was clicked on--along with the data the user entered--to
@@ -970,11 +1014,11 @@ used instead of items if desired by a user. The two commands currently
 implemented by Canary are for setting a marker and setting the block
 handler property of a block. They are defined as follows:
 
-\code{/test builder edit marker X Y Z MARKER\_NAME}
+\noindent\code{/test builder edit marker X Y Z MARKER\_NAME}
 
 Creates a marker at position (X, Y, Z) with the given name.
 
-\code{/test builder edit handler X Y Z HANDLER\_NAME}
+\noindent\code{/test builder edit handler X Y Z HANDLER\_NAME}
 
 Sets the block handler for the block at position (X, Y, Z) to be the one
 defined by the given name.
@@ -989,75 +1033,59 @@ file use a format custom to Canary that was created to be easy to create
 and parse while trying to minimize the size of test structure files.
 Large software projects can have hundreds or even thousands of tests,
 and an overly verbose format could cause test structures to use up an
-unnecessary amount of disk space. Listing TB.1 shows a sample test
+unnecessary amount of disk space. Listing \ref{lst:tb_1} shows a sample test
 structure file.
 
-```json
+%```json
 
-// Listing TB.1
+%// Listing TB.1
+\begin{longcode}
 
-\{
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{json}
+{
+    "id": "my-test-world",
+    "size": [
+        16,
+        16,
+        16
+    ],
+    "markers": {
+        "diamond_block": 123
+    },
+    "blockmap": [
+        "minecraft:stone",
+        "minecraft:cobblestone_stairs[facing=north]",
+        {
+            "block": "minecraft:stone_stairs[facing=south,waterlogged=true]",
+            "handler": "example:my_block_handler",
+            "data": "{name1:123,name2:\"sometext1\",name3:{subname1:456,subname2:\"sometext2\"}}"
+        }
+    ],
+    "blocks": "0,256;1,16;0,240;-1,3584"
+}
+\end{minted}
+  \caption{Example of structure file}
+  \label{lst:tb_1}
+\end{longcode}
+%```
 
-"id": "my-test-world",
+The fields of the JSON file in Listing \ref{lst:tb_1} are specified as such.
 
-"size": {[}
-
-16,
-
-16,
-
-16
-
-{]},
-
-"markers": \{
-
-"diamond\_block": 123
-
-\},
-
-"blockmap": {[}
-
-"minecraft:stone",
-
-"minecraft:cobblestone\_stairs{[}facing=north{]}",
-
-\{
-
-"block": "minecraft:stone\_stairs{[}facing=south,waterlogged=true{]}",
-
-"handler": "example:my\_block\_handler",
-
-"data":
-"\{name1:123,name2:\textbackslash"sometext1\textbackslash",name3:\{subname1:456,subname2:\textbackslash"sometext2\textbackslash"\}\}"
-
-\}
-
-{]},
-
-"blocks": "0,256;1,16;0,240;-1,3584"
-
-\}
-
-```
-
-The fields of the JSON file in Listing TB.1 are specified as such.
-
-\textbf{id}
+\noindent\textbf{id}
 
 Some unique id to be referenced from the test code.
 
-\textbf{size}
+\noindent\textbf{size}
 
 The x, y, and z size of the structure, with a max of 48, 48, 48.
 
-\textbf{markers}
+\noindent\textbf{markers}
 
 An object where each key-value pair represents the name and position
 index of the marker. The position indexing uses the same scheme as
 described for the block's value.
 
-\textbf{blockmap}
+\noindent\textbf{blockmap}
 
 An array where each element represents a block which is used in the
 structure; a block id of \code{-1} represents a block of air with no additional
@@ -1072,7 +1100,7 @@ handler or data, it must be defined as using a block object. If a block
 just has a type and tags, it can just be stored using a string equal to
 what the block string of it's object would be.
 
-\textbf{blocks}
+\noindent\textbf{blocks}
 
 A run length encoding of the blocks for the test. The semicolons
 separate each block definition. A block definition starts with a block
@@ -1119,43 +1147,42 @@ environment throughout its execution time. The program can be
 conceptually split into two distinct segments, roughly modeled after a
 typical interpreted programming language: assertions themselves
 (syntax), and the backing assertion nodes (AST). The syntax of a typical
-assertion in Canary can be found in Listing 4.2.1.
+assertion in Canary can be found in Listing \ref{lst:4_2_1}.
 
-```java
-
-// Listing 4.2.1
-
-expect(myZombie).toBeAt(3, 1, 3).and().toHaveHealth(20.0);
-
-```
+%// Listing 4.2.1
+\begin{listing}[H]
+\begin{minted}[linenos]{java}
+  expect(myZombie).toBeAt(3, 1, 3).and().toHaveHealth(20.0);
+\end{minted}
+\caption{Example assertion}
+\label{lst:4_2_1}
+\end{listing}
 
 The syntax is legible like plain English, e.g. "I expect that my zombie
 will be at \code{\textless3,1,3\textgreater{}} and have \code{20} health". In this
 report, an assertion may be referenced using the following abstract
 representation: \code{EXPECT myZombie.pos=\textless3,1,3\textgreater{} AND
 myZombie.health=20.0}, or simply \code{pos=\textless3,1,3\textgreater{} AND
-health=20.0} for the general case. When the test containing Listing 4.2.1
+health=20.0} for the general case. When the test containing Listing \ref{lst:4_2_1}
 is executed, the calls generate a list of steps to the assertion. This
 step is analogous to tokenizing an input source in a programming
-language. The generated list for this case is shown in Listing 4.2.2.
+language. The generated list for this case is shown in Listing \ref{lst:4_2_2}.
 
-```
-
-// Listing 4.2.2
-
+%// Listing 4.2.2
+\begin{listing}[H]
+\begin{minted}[linenos]{c}
 SUBJECT = myZombie
 
-STEPS = {[}
+STEPS = [
+  subject.pos == <3, 1, 3>,
+  AND,
+  subject.health == 20.0,
+]
+\end{minted}
+\caption{Assertion after parsing}
+\label{lst:4_2_2}
+\end{listing}
 
-subject.pos == \textless3, 1, 3\textgreater,
-
-AND,
-
-subject.health == 20.0,
-
-{]}
-
-```
 
 From the step list, the engine generates a tree of nodes, each of which
 has the ability to report whether it passed or failed depending on the
@@ -1205,13 +1232,13 @@ on an \code{EntityAssertion}. This works fine in isolation; however, it falls
 apart when considering chained assertions such as an \code{AND} statement. Each
 assertion function returns itself so that more statements can be chained
 together, but control statements are defined on the base assertion
-class. Consider the code snippet in Listing 4.2.2.1; the \code{and()} call
+class. Consider the code snippet in Listing \ref{lst:4_2_2_1}; the \code{and()} call
 returns a \code{BaseAssertion} instance, which does not have \code{toBeOnFire()}.
 Java does not have a self type like in some languages, so we must use
 recursive generics to accomplish a similar effect. Recursive generics
 are generic types which reference themselves. The (abbreviated)
 definitions for \code{BaseAssertion} and \code{EntityAssertion} can be seen in
-Listing 4.2.2.2. \code{BaseAssertion} requires a generic parameter of some type
+Listing \ref{lst:4_2_2_2}. \code{BaseAssertion} requires a generic parameter of some type
 inheriting from \code{BaseAssertion}. In \code{EntityAssertion}, we fill this
 requirement. As a result, the return type of \code{not()} inside
 \code{EntityAssertion} is still \code{EntityAssertion}. While this solution does
@@ -1220,29 +1247,37 @@ practice because there is no strong validation on what is being set as
 the generic parameter. This system is internal to Canary, so these
 contracts can still be met to create a usable syntax and stability.
 
-```java
+%```java
 
-// Listing 4.2.2.1
-
+%// Listing 4.2.2.1
+\begin{listing}[H]
+\begin{minted}[linenos]{java}
 expect(myEntity).toBeAt(3, 1, 3).and().toBeOnFire()
+\end{minted}
+\caption{Example assertion}
+\label{lst:4_2_2_1}
+\end{listing}
+%```
 
-```
+%```java
 
-```java
+%// Listing 4.2.2.2
 
-// Listing 4.2.2.2
+\begin{listing}[H]
+\begin{minted}[breaklines, linenos]{java}
+public class BaseAssertion<This extends BaseAssertion<This>> {
 
-public class BaseAssertion\textless This extends
-BaseAssertion\textless This\textgreater\textgreater{} \{
+public This not() { ... }
 
-public This not() \{ ... \}
+}
 
-\}
+public class EntityAssertion extends BaseAssertion<EntityAssertion> { ... }
 
-public class EntityAssertion extends
-BaseAssertion\textless EntityAssertion\textgreater{} \{ ... \}
-
-```
+\end{minted}
+\caption{Overview of BaseAssertion}
+\label{lst:4_2_2_2}
+\end{listing}
+%```
 
 \subsubsection{Player Interaction Testing}
 
@@ -1403,7 +1438,7 @@ In headless mode, the output is going to a terminal, meaning the result
 can be somewhat long and must encode all relevant information into text.
 In this case, Canary logs the failed assertion tree for the failing tick
 into the terminal, along with the complete log. An abbreviated failure
-in headless mode can be seen in Figure 4.3.4.1. In a CI/CD pipeline,
+in headless mode can be seen in Figure \ref{lst:4_3_4_1}. In a CI/CD pipeline,
 users typically do not have access to files produced during execution,
 so writing a log file is not helpful. Additionally, headless mode does
 not give any visual output of the test, so the log is the only available
@@ -1411,57 +1446,68 @@ information. As such, it is recommended that users instead download the
 test and execute it locally for an interactive visual output of the
 running test.
 
-```
+%```
 
-// Figure 4.3.4.1
+%// Figure 4.3.4.1
+%\begin{lstlisting}[caption=Sample Log]
 
+\begin{listing}[H]
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{text}
 Testing complete.
-
 1 test failed.
 
-Error: com.mattworzala.canary.demo.TestEntityTest.testWalkToDiamondBlock
-- e\_e9f02b@\textless2, 1, 3\textgreater{}
-
-e\_e9f02b did not reach \textless2, 1, 3\textgreater{}
+Error: com.mattworzala.canary.demo.TestEntityTest.testWalkToDiamondBlock - e_e9f02b@<2, 1, 3>
+e_e9f02b did not reach <2, 1, 3>
 
 Complete Log
+e_e9f02b@<2, 1, 3>
+Step 0 : entity1 was at <2, 1, 1>
+Step 1 : entity1 was at <2, 1, 1>
+Step 2 : entity1 was at <2, 1, 1>
+Step 3 : entity1 was at <2, 1, 1>
+...
+\end{minted}
+\caption{Sample Log}
+\label{lst:4_3_4_1}
+\end{listing}
+%\end{lstlisting}
 
-e\_e9f02b@\textless2, 1, 3\textgreater{}
-
-Step 0 : entity1 was at \textless2, 1, 1\textgreater{}
-
-Step 1 : entity1 was at \textless2, 1, 1\textgreater{}
-
-Step 2 : entity1 was at \textless2, 1, 1\textgreater{}
-
-Step 3 : entity1 was at \textless2, 1, 1\textgreater{}
-
-\ldots{}
-
-```
+%```
 
 In sandbox mode, the user can see and interact with the test output.
 This allows the user to debug the test in the same way as someone might
 do when manually testing a feature. In addition, sandbox mode provides
 only the last tick failure to the player, deferring to the longer log
 file for the complete output of the test. A sample failure report
-generated by the sandbox mode can be seen in Figure 4.3.4.2. The message
+generated by the sandbox mode can be seen in Figure \ref{fig:4_3_4_2}. The message
 contains a clickable element (\code{{[}LOG{]}}) to open the log file locally,
 and to teleport to the test in the sandbox to view the result visually.
 The test name can be clicked to teleport to the test in the sandbox
 instance. In addition to a more concise output, the sandbox instance
 indicates test results using a Minecraft beacon. As seen in Figure
-4.3.4.3, this is visible from far away allowing the user to quickly
+\ref{fig:4_3_4_3}, this is visible from far away allowing the user to quickly
 identify failing tests in the sandbox.
 
-\includegraphics[width=5.89071in,height=0.95353in]{media/media/image6.png}
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image6.png} 
+    \caption{Report generated in game when an assertion fails.} 
+    \label{fig:4_3_4_2}  
+\end{figure}
+%\includegraphics[width=5.89071in,height=0.95353in]{media/media/image6.png}
 
-Figure 4.3.4.2: Report generated in game when an assertion fails.
+%Figure 4.3.4.2: Report generated in game when an assertion fails.
 
-\includegraphics[width=5.89249in,height=3.31771in]{media/media/image3.png}
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image3.png} 
+    \caption{Red and green beacons indicating success and failure of a test.}
+    \label{fig:4_3_4_3}  
+\end{figure}
+%\includegraphics[width=5.89249in,height=3.31771in]{media/media/image3.png}
 
-Figure 4.3.4.3: Red and green beacons indicating success and failure of
-a test.
+%Figure 4.3.4.3: Red and green beacons indicating success and failure of
+%a test.
 
 \section{Discussion}
 
@@ -1498,7 +1544,7 @@ the library.
 
 \subsubsection{Canary Demo}
 
-Canary was designed and built for the goal of testing and entity and
+Canary was designed and built for the goal of testing entity and
 block behaviors and interactions. In order to demonstrate this, we chose
 to implement a highly simplified and barebones version of minecarts.
 Minecarts are an entity that travels along rails placed by the player.
@@ -1511,71 +1557,80 @@ Our implementation of minecarts is highly simplistic, lacking most of
 the features of vanilla Minecraft. What we have implemented is that
 placing a minecart on top of a rail will cause it to travel in a
 straight line along the rail until it is no longer over a rail. As can
-be seen in Figure 5.1.1.1, we created 3 tests for our minecart
+be seen in Figure \ref{fig:5_1_1_1}, we created 3 tests for our minecart
 implementation.
 
-\includegraphics[width=6.14063in,height=3.37538in]{media/media/image15.png}
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image15.png} 
+    \caption{From left to right, test 1, test 2, and test 3 before being run}
+    \label{fig:5_1_1_1}  
+\end{figure}
+%\includegraphics[width=6.14063in,height=3.37538in]{media/media/image15.png}
 
-Figure 5.1.1.1: From left to right, test 1, test 2, and test 3 before
-being run
+%Figure 5.1.1.1: From left to right, test 1, test 2, and test 3 before
+%being run
 
-\textbf{Test 1: straight line track}
+\noindent\textbf{Test 1: straight line track}
 
 This test aimed to verify that when a minecart was placed on rails, it
 would travel along those rails. The structure for the test consists of 3
 rails on top of a layer of stone blocks. The code for this test is shown
-in Listing CD.1.
+in Listing \ref{lst:cd_1}.
 
-```java
+%```java
 
-// Listing CD.1
-
+%// Listing CD.1
+\begin{listing}[H]
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{java}
 @InWorldTest
+public void straightConstantSpeed(TestEnvironment env) {
+  // spawns the minecart on top of the first rail (coordinates are relative to the structure origin)
+  Pos starting_minecart_pos =  new Pos(1.5, 1, 1.5);
+  var minecart = env.spawnEntity(MinecartEntity::new, starting_minecart_pos);
+  // expect the minecart to be 3 blocks over in the x direction
+  env.expect(minecart).toBeAt(starting_minecart_pos.withX(x -> x + 3));
+}
+\end{minted}
+\caption{Code for Test 1}
+\label{lst:cd_1}
+\end{listing}
+%```
 
-public void straightConstantSpeed(TestEnvironment env) \{
-
-// spawns the minecart on top of the first rail (coordinates are
-relative to the structure origin)
-
-\begin{quote}
-Pos starting\_minecart\_pos = new Pos(1.5, 1, 1.5);
-\end{quote}
-
-var minecart = env.spawnEntity(MinecartEntity::new,
-starting\_minecart\_pos);
-
-// expect the minecart to be 3 blocks over in the x direction
-
-env.expect(minecart).toBeAt(starting\_minecart\_pos.withX(x
--\textgreater{} x + 3));
-
-\}
-
-```
-
-After running, test 1 passes. Shown in Figure 5.1.1.2 is the test after
+After running, test 1 passes. Shown in Figure \ref{fig:5_1_1_2} is the test after
 passing, with the green beacon to indicate success.
 
-\includegraphics[width=6.17708in,height=3.39355in]{media/media/image12.png}
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image12.png} 
+    \caption{Test 1 after passing} 
+    \label{fig:5_1_1_2}  
+\end{figure}
+%\includegraphics[width=6.17708in,height=3.39355in]{media/media/image12.png}
 
-Figure 5.1.1.2: Test 1 after passing
+%Figure 5.1.1.2: Test 1 after passing
 
-\textbf{Test 2: No Track}
+\noindent\textbf{Test 2: No Track}
 
 This test verifies that the minecart only moves forward when it is on
 top of rails. The structure and code are nearly identical to test 1,
 except the structure associated with it does not have the rails for the
 minecart. For the test code, the only change is to the assertion, which
-now contains a \code{NOT} (Listing CD.2).
+now contains a \code{NOT} (Listing \ref{lst:cd_2}).
 
-```java
+%```java
 
-// Listing CD.2
+%// Listing CD.2
 
-env.expect(minecart).not().toBeAt(starting\_minecart\_pos.withX(x
--\textgreater{} x + 2));
+\begin{listing}[H]
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{java}
+env.expect(minecart).not().toBeAt(starting_minecart_pos.withX(x -> x + 2));
+\end{minted}
+\caption{Assertion statement for Test 2}
+\label{lst:cd_2}
+\end{listing}
 
-```
+%```
 
 This test also passes, although it passes instantly, demonstrating a
 current shortcoming of our assertion engine. Because the only assertion
@@ -1584,25 +1639,36 @@ meaning the test stops executing. This issue could be addressed by
 allowing users to specify a minimum lifetime for the test, giving time
 to check for unwanted behavior.
 
-\textbf{Test 3: Gravity}
+\noindent\textbf{Test 3: Gravity}
 
 This tests for a behavior that is currently not implemented correctly:
 the ability to fall off one rail and land on another lower down.
 Currently, the minecart gets stuck at the top due to incorrect physics
 properties.
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image10.png} 
+    \caption{Test 3 after timing out} 
+    \label{fig:5_1_1_3}  
+\end{figure}
+%\includegraphics[width=6.5in,height=3.57052in]{media/media/image10.png}
 
-\includegraphics[width=6.5in,height=3.57052in]{media/media/image10.png}
+%Figure 5.1.1.3: Test 3 after timing out
 
-Figure 5.1.1.3: Test 3 after timing out
-
-We see in Figure 5.1.1.3 that when the test fails, the beacon becomes
+We see in Figure \ref{fig:5_1_1_3} that when the test fails, the beacon becomes
 red, and a book stand is placed. Right clicking on the book stand, as
-shown in Figure 5.1.1.4, gives the reason for test failure. In this
+shown in Figure \ref{fig:5_1_1_4}, gives the reason for test failure. In this
 case, the test timed out.
 
-\includegraphics[width=5.8125in,height=3.20414in]{media/media/image14.png}
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image14.png} 
+    \caption{The error message for test 3} 
+    \label{fig:5_1_1_4}  
+\end{figure}
+%\includegraphics[width=5.8125in,height=3.20414in]{media/media/image14.png}
 
-Figure 5.1.1.4: The error message for test 3
+%Figure 5.1.1.4: The error message for test 3
 
 This demo feature implementation and testing shows the basic
 functionality of Canary. The process of creating the demo gave us the
@@ -1664,38 +1730,36 @@ testing becomes an integral part of the writing process. Where BDD
 differs, however, is how tests are written; TDD takes a traditional
 approach of self-contained test functions, whereas BDD works in terms of
 "scenarios". These scenarios describe a series of events and expected
-behavior. A sample can be seen in Listing 5.2.3.1 for a store
+behavior. A sample can be seen in Listing \ref{lst:5_2_3_1} for a store
 application where the scenarios describe what happens to an item when
 returned to a store. BDD provides two key benefits: tests which provide
 concrete usage examples, and collaboration with non-developers to create
 a shared understanding of functionality.
 
-```
+%```
 
-// Listing 5.2.3.1
+%// Listing 5.2.3.1
 
-// Adapted from
-https://en.wikipedia.org/wiki/Behavior-driven\_development
+\begin{listing}[H]
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{text}
+// Adapted from https://en.wikipedia.org/wiki/Behavior-driven\_development
 
 Title: Returns go to inventory.
 
 As a store owner,
-
 I want to add items back to inventory when they are returned,
-
 so that I can track inventory.
 
 Scenario 1: Items returned for refund should be added to inventory.
-
 Given that a customer previously bought a black sweater from me
-
 And I have three black sweaters in inventory,
-
 When they return the black sweater for a refund,
-
 Then I should have four black sweaters in inventory.
-
-```
+\end{minted}
+\caption{Sample BDD test}
+\label{lst:5_2_3_1}
+\end{listing}
+%```
 
 In Canary, a user could create a test structure and then write a
 scenario for it in the game using a library of statements which have
@@ -1752,7 +1816,7 @@ by a \code{java.lang.ClassLoader}. The language allows multiple class loaders
 to exist in a tree, which imposes restrictions on which classes can be
 accessed where. Class loaders form a bottom-up tree structure where
 class loaders know their parent, but not their children. Using the class
-loader setup in Figure AA.1 as an example, class loader A and B both
+loader setup in Figure \ref{fig:aa1} as an example, class loader A and B both
 have a shared parent of the root class loader. All classes must be
 loaded into a single class loader, which determines whether they are
 able to access other classes. For example, \code{ClassA} is loaded into class
@@ -1761,7 +1825,7 @@ loader or in a parent. In this case, \code{ClassA} may access \code{Main} and
 `StringUtil`, but \emph{not} \code{ClassB}. In the same respect, \code{Main} may 
 not access \code{ClassA} or \code{ClassB}. When a class loader is instructed to 
 load a class, it will first attempt to load the class from a parent class
-loader, and then try to load it in itself. In Listing AA.1, this means
+loader, and then try to load it in itself. In Listing \ref{lst:aa2}, this means
 that if class loader A requests \code{ClassA}, it will return the loaded
 version. However, if the root class loader requests \code{ClassA}, a new,
 unique, instance will be loaded onto the root class loader. Having
@@ -1771,70 +1835,106 @@ because they are \emph{not} convertible (for example, an instance of
 \code{ClassA} from the root class loader). This system is relevant to
 Minestom because Minestom uses the Mixin framework.
 
-\includegraphics[width=4.71875in,height=1.7856in]{media/media/image1.png}
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{media/media/image1.png} 
+    \caption{Example class loader hierarchy} 
+    \label{fig:aa1}  
+\end{figure}
+%\includegraphics[width=4.71875in,height=1.7856in]{media/media/image1.png}
 
-Figure AA.1: Example class loader hierarchy
+%Figure AA.1: Example class loader hierarchy
 
 Mixin is a framework developed by the SpongePowered team for runtime
 modification of Java classes. It hooks into the class loading process to
 modify the bytecode of the loading class. This allows a user to modify
 an existing class of a library without having to compile a new version
-or fork the project. Listing AA.2 shows an example Mixin which will add
+or fork the project. Listing \ref{lst:aa2} shows an example Mixin which will add
 a system print to the first line of \code{CanaryTestEngine\#discover} at
-runtime. Listing AA.3 shows the definition of
+runtime. Listing \ref{lst:aa3} shows the definition of
 \code{CanaryTestEngine\#discover} at compile time and then at runtime after
 the Mixin has been applied. Minestom includes the Mixin framework so
 that extensions (Minestom's plug-in system) are able to modify Minestom
 classes without requiring a fork of the project.
 
-```java
-
-// Listing AA.2
-
+\begin{listing}[H]
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{java}
 @Mixin(CanaryTestEngine.class)
+public class CanaryTestEngineMixin {
 
-public class CanaryTestEngineMixin \{
+  @Inject(method = "discover", at = @At("HEAD"))
+  public void discover(EngineDiscoveryRequest discoveryRequest, UniqueId uniqueId, CallbackInfoReturnable<CanaryEngineDescriptor> cir) {
+    System.out.println("Printed during discovery");
+  }
+}
+\end{minted}
+\caption{An example of a Minestom Mixin}
+\label{lst:aa2}
+\end{listing}
+%```java
 
-@Inject(method = "discover", at = @At("HEAD"))
+%// Listing AA.2
 
-public void discover(EngineDiscoveryRequest discoveryRequest, UniqueId
-uniqueId,
-CallbackInfoReturnable\textless CanaryEngineDescriptor\textgreater{}
-cir) \{
+%@Mixin(CanaryTestEngine.class)
 
-System.out.println("Printed during discovery");
+%public class CanaryTestEngineMixin \{
 
-\}
+%@Inject(method = "discover", at = @At("HEAD"))
 
-\}
+%public void discover(EngineDiscoveryRequest discoveryRequest, UniqueId
+%uniqueId,
+%CallbackInfoReturnable\textless CanaryEngineDescriptor\textgreater{}
+%cir) \{
 
-```
+%System.out.println("Printed during discovery");
 
-```java
+%\}
 
-// Listing AA.3
+%\}
+
+%```
+
+\begin{listing}[H]
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{java}
+@Override
+public CanaryEngineDescriptor discover(EngineDiscoveryRequest discoveryRequest, UniqueId uniqueId) {
+  return CanaryDiscoverer.discover(discoveryRequest, uniqueId);
+}
 
 @Override
+public CanaryEngineDescriptor discover(EngineDiscoveryRequest discoveryRequest, UniqueId uniqueId) {
+  System.out.println("Printed during discovery");
+  return CanaryDiscoverer.discover(discoveryRequest, uniqueId);
+}
+\end{minted}
+\caption{CanaryTestEngine\#discover}
+\label{lst:aa3}
+\end{listing}
+%```java
 
-public CanaryEngineDescriptor discover(EngineDiscoveryRequest
-discoveryRequest, UniqueId uniqueId) \{
+%// Listing AA.3
 
-return CanaryDiscoverer.discover(discoveryRequest, uniqueId);
+%@Override
 
-\}
+%public CanaryEngineDescriptor discover(EngineDiscoveryRequest
+%discoveryRequest, UniqueId uniqueId) \{
 
-@Override
+%return CanaryDiscoverer.discover(discoveryRequest, uniqueId);
 
-public CanaryEngineDescriptor discover(EngineDiscoveryRequest
-discoveryRequest, UniqueId uniqueId) \{
+%\}
 
-System.out.println("Printed during discovery");
+%@Override
 
-return CanaryDiscoverer.discover(discoveryRequest, uniqueId);
+%public CanaryEngineDescriptor discover(EngineDiscoveryRequest
+%discoveryRequest, UniqueId uniqueId) \{
 
-\}
+%System.out.println("Printed during discovery");
 
-```
+%return CanaryDiscoverer.discover(discoveryRequest, uniqueId);
+
+%\}
+
+%```
 
 The presence of this system adds a significant complexity to Canary.
 Mixin requires that all classes are loaded into a Mixin-enabled class
@@ -1859,24 +1959,36 @@ independent from the server, it is possible to start multiple
 independent Minestom servers which could provide complete isolation
 between running tests.
 
-```java
+\begin{listing}[H]
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{java}
+public class BoostrapMain {
+    public static void main(String[] args) {
+        // com.example.Main.main(String[]) will be invoked after being loaded into the Mixin class loader.
+        Bootstrap.bootstrap("com.example.Main", args);
+    }
+}
+\end{minted}
+\caption{Initializing Minestom}
+\label{lst:aa4}
+\end{listing}
+%```java
 
-// Listing AA.4
+%// Listing AA.4
 
-public class BoostrapMain \{
+%public class BoostrapMain \{
 
-public static void main(String{[}{]} args) \{
+%public static void main(String{[}{]} args) \{
 
-// com.example.Main.main(String{[}{]}) will be invoked after being
-loaded into the Mixin class loader.
+%// com.example.Main.main(String{[}{]}) will be invoked after being
+%loaded into the Mixin class loader.
 
-Bootstrap.bootstrap("com.example.Main", args);
+%Bootstrap.bootstrap("com.example.Main", args);
 
-\}
+%\}
 
-\}
+%\}
 
-```
+%```
 
 This project and report were written for Minestom targeting Minecraft
 version 1.17. The game is now on 1.18, and during the 1.18 update,
@@ -1904,34 +2016,52 @@ sandbox server may be started manually by invoking it's main class
 (\code{com.mattworzala.canary.internal.launch.SandboxLauncher}); however, there
 are some required command line arguments which would have to be added
 manually. These options are configurable through the Gradle plugin. An
-example usage can be seen in Listing AB.1. The plugin is added via its
+example usage can be seen in Listing \ref{ab1}. The plugin is added via its
 ID (\code{com.mattworzala.canary}) and then may be configured through the
 canary block. In this sample, only the Canary version is being
 configured.
 
-```kotlin
-
-// Listing AB.1
-
+\begin{listing}[H]
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{kotlin}
 // build.gradle.kts
 
-plugins \{
+plugins {
+    id("com.mattworzala.canary")
+}
 
-id("com.mattworzala.canary")
+tasks {
+    canary {
+        version = "-SNAPSHOT"
+    }
+}
+}
+\end{minted}
+\caption{Gradle configuration}
+\label{lst:ab1}
+\end{listing}
+%```kotlin
 
-\}
+%// Listing AB.1
 
-tasks \{
+%// build.gradle.kts
 
-canary \{
+%plugins \{
 
-version = "-SNAPSHOT"
+%id("com.mattworzala.canary")
 
-\}
+%\}
 
-\}
+%tasks \{
 
-```
+%canary \{
+
+%version = "-SNAPSHOT"
+
+%\}
+
+%\}
+
+%```
 
 While the Gradle plugin facilitates external usage, there is some room
 for internal tooling as well. As described in Appendix A, Canary
@@ -1953,21 +2083,30 @@ safety checker what environment (class loader) the class may be used in.
 The valid options are \code{GLOBAL} for classes available in both class loaders
 and \code{PLATFORM} / \code{MINESTOM} for JUnit/Minestom respectively. With this
 information, errors can be generated from invalid import statements.
-Figure AB.2 shows an error generated by the safety checker when
+Figure \ref{ab2} shows an error generated by the safety checker when
 importing \code{CanaryTestEngine} from \code{HeadlessServer}.
 
-```
-
-// Figure AB.2
-
-HeadlessServer.java:6: error: Cannot import com...CanaryTestEngine
-(PLATFORM) from MINESTOM
-
+\begin{listing}[H]
+\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, linenos]{text}
+HeadlessServer.java:6: error: Cannot import com...CanaryTestEngine (PLATFORM) from MINESTOM
 import com.mattworzala.canary.internal.junit.CanaryTestEngine;
+^
+\end{minted}
+\caption{Example safety checker error}
+\label{lst:ab2}
+\end{listing}
+%```
 
-\^{}
+%// Figure AB.2
 
-```
+%HeadlessServer.java:6: error: Cannot import com...CanaryTestEngine
+%(PLATFORM) from MINESTOM
+
+%import com.mattworzala.canary.internal.junit.CanaryTestEngine;
+
+%\^{}
+
+%```
 
 \end{onehalfspacing} % Return to single spacing
 %\section*{Abstract} % Start the section 'Abstract'. Include the asterisks to keep section unnumbered and off of the table of contents
